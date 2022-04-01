@@ -12,7 +12,7 @@ package body Test_Exercises_Intro is
    procedure Test_LibAdaLang_AST (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
 
-      Unit : constant Analysis_Unit := Analyze_File ("src/mismatch.ads");
+      Unit : constant Analysis_Unit := Analyze_File ("../src/mismatch.ads");
    begin
       Put_Line ("Begin - " & Enclosing_Entity);
       Unit.Print;
@@ -37,7 +37,7 @@ package body Test_Exercises_Intro is
       end Process_Node;
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("tests/" & GNAT.Source_Info.File);
+        Analyze_File ("src/" & GNAT.Source_Info.File);
    begin
       Put_Line ("Begin - " & Enclosing_Entity);
       Unit.Root.Traverse (Process_Node'Access);
@@ -69,7 +69,7 @@ package body Test_Exercises_Intro is
          return Into;
       end Process_Node;
 
-      Project_Filename : constant String                := "test_driver.gpr";
+      Project_Filename : constant String                := "tests.gpr";
       Units            : constant Analysis_Units.Vector :=
         Analyze_Project (Project_Filename);
    begin

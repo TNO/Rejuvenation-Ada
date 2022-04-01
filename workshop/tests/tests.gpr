@@ -84,7 +84,7 @@ project Tests is
 
    package Check is
       for Default_Switches ("Ada") use
-        ("-rules", "-from=" & Project'Project_dir & "../settings/gnatcheck.rules");
+        ("-rules", "-from=" & Project'Project_dir & "../../settings/gnatcheck.rules");
    end Check;
 
 end Tests;

@@ -104,7 +104,7 @@ package body Test_Exercises_Navigate is
       end Process_Node;
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("tests/" & GNAT.Source_Info.File);
+        Analyze_File ("src/" & GNAT.Source_Info.File);
    begin
       Put_Line ("Begin - " & Enclosing_Entity);
       Unit.Root.Traverse (Process_Node'Access);
@@ -142,7 +142,7 @@ package body Test_Exercises_Navigate is
       end Process_Node;
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("../../src/count_subprogram.ads");
+        Analyze_File ("../src/count_subprogram.ads");
    begin
       Put_Line ("Begin - " & Enclosing_Entity);
       Unit.Root.Traverse (Process_Node'Access);
@@ -266,7 +266,7 @@ package body Test_Exercises_Navigate is
       end Process_Node;
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("../../src/assignmentbyifexamples.adb");
+        Analyze_File ("../src/assignmentbyifexamples.adb");
    begin
       Put_Line ("Begin - " & Enclosing_Entity);
       Unit.Root.Traverse (Process_Node'Access);
