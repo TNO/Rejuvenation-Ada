@@ -151,7 +151,7 @@ package body Test_Examples is
       end Process_Node;
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("tests/" & GNAT.Source_Info.File);
+        Analyze_File ("src/" & GNAT.Source_Info.File);
    begin
       Put_Line ("Begin - " & Enclosing_Entity);
       Unit.Root.Traverse (Process_Node'Access);

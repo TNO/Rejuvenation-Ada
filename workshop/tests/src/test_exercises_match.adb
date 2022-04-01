@@ -38,7 +38,7 @@ package body Test_Exercises_Match is
       end Valid_Node;
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("src/count_subprogram.ads");
+        Analyze_File ("../../src/count_subprogram.ads");
       Found_Nodes : constant Node_List.Vector :=
         Find (Unit.Root, Valid_Node'Access);
    begin
@@ -61,7 +61,7 @@ package body Test_Exercises_Match is
       pragma Unreferenced (T);
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("src/assignmentbyifexamples.adb");
+        Analyze_File ("../../src/assignmentbyifexamples.adb");
 
       Pattern_Assign_Condition_In_If_Statement : constant Pattern :=
         Make_Pattern
@@ -110,7 +110,7 @@ package body Test_Exercises_Match is
       end Handle_Matches;
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("src/newlineexamples.adb");
+        Analyze_File ("../../src/newlineexamples.adb");
       Pattern1_New_Line : constant Pattern :=
         Make_Pattern ("ASCII.CR & ASCII.LF", Expr_Rule);
       Found1_Matches : constant Match_Pattern_List.Vector :=
