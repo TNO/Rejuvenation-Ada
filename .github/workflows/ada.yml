@@ -29,7 +29,10 @@ jobs:
       run: cd examples && alr run
 
     - name: Workshop
-      run: cd workshop && alr run
+      run: cd workshop && alr build
+
+    - name: Workshop Answers
+      run: cd workshop/tests && alr run
 
     - name: Find Tool
       run: cd find_tool && alr build

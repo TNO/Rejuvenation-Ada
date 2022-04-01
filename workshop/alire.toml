@@ -1,0 +1,7 @@
+name = "workshop"
+description = "Workshop - code snippets for exercises"
+version = "0.0.0"
+
+authors = ["Pierre van de Laar"]
+maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
+maintainers-logins = ["pjljvandelaar"]

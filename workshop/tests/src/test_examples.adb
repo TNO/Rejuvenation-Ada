@@ -185,7 +185,7 @@ package body Test_Examples is
       end Valid_Node;
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("tests/" & GNAT.Source_Info.File);
+        Analyze_File ("src/" & GNAT.Source_Info.File);
       Found_Nodes : constant Node_List.Vector :=
         Find (Unit.Root, Valid_Node'Access);
    begin
@@ -211,7 +211,7 @@ package body Test_Examples is
           ("$M_vars : Ada_Node := $S_default_expr;", Object_Decl_Rule);
 
       Unit : constant Analysis_Unit :=
-        Analyze_File ("tests/" & GNAT.Source_Info.File);
+        Analyze_File ("src/" & GNAT.Source_Info.File);
       Found_Matches : constant Match_Pattern_List.Vector :=
         Find_Full
           (Unit.Root, Pattern_ObjectDecl_Type_AdaNode_DefaultExpr_Present);
@@ -294,8 +294,8 @@ package body Test_Examples is
       declare
          Unit : constant Analysis_Unit :=
            Analyze_File_In_Project
-             ("src/ParentPackage-ChildPackage.adb",
-              "rejuvenation_workshop.gpr");
+             ("../src/ParentPackage-ChildPackage.adb",
+              "workshop.gpr");
          CU : constant Compilation_Unit := Unit.Root.As_Compilation_Unit;
       begin
          Assert
@@ -332,8 +332,8 @@ package body Test_Examples is
       declare
          Unit : constant Analysis_Unit :=
            Analyze_File_In_Project
-             ("src/ParentPackage-ChildPackage.ads",
-              "rejuvenation_workshop.gpr");
+             ("../src/ParentPackage-ChildPackage.ads",
+              "workshop.gpr");
          CU : constant Compilation_Unit := Unit.Root.As_Compilation_Unit;
       begin
          Assert

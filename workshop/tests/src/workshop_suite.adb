@@ -5,7 +5,7 @@ with Test_Exercises_Navigate; use Test_Exercises_Navigate;
 with Test_Exercises_Match;    use Test_Exercises_Match;
 with Test_Exercises_Rewrite;  use Test_Exercises_Rewrite;
 
-package body Rejuvenation_Workshop_Suite is
+package body Workshop_Suite is
 
    function Suite return Access_Test_Suite is
       Ret : constant Access_Test_Suite := new Test_Suite;
@@ -23,4 +23,4 @@ package body Rejuvenation_Workshop_Suite is
       return Ret;
    end Suite;
 
-end Rejuvenation_Workshop_Suite;
+end Workshop_Suite;

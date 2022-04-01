@@ -1,5 +1,3 @@
-with Ada.Text_IO; use Ada.Text_IO;
-
 package body NewLineExamples is
 
    function Text_New_Lines (Text : String) return String

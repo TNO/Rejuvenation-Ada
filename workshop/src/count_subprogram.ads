@@ -14,10 +14,16 @@ package Count_Subprogram is
    procedure P3E (x, y, z : Integer) is null;
    procedure P3F (x : Integer; y : Integer; z : Integer) is null;
 
-   procedure P3G (x : Integer  := 0; y : Integer  := 1; z : Integer  := 2);
-   procedure P3H (x, y, z : Integer  := 0);
+   procedure P3G (x : Integer := 0; y : Integer := 1; z : Integer := 2);
+   procedure P3H (x, y, z : Integer := 0);
 
+   --  STYLE_CHECK
+   --  gnatyI: `check mode IN keywords.'
+   --  Mode in (the default mode) is not allowed to be given explicitly.
+   --  in out is fine, but not in on its own.
+   pragma Style_Checks (Off);
    procedure P3I (x, y, z : in Integer);
+   pragma Style_Checks (On);
    procedure P3J (x, y, z : in out Integer);
    procedure P3K (x, y, z : out Integer);
 
@@ -39,13 +45,19 @@ package Count_Subprogram is
    end My_Package;
 
    type Callback_Procedure_A is access procedure (x, y, z : Integer);
-   type Callback_Procedure_B is access procedure (x : Integer; y : Integer; z : Integer);
+   type Callback_Procedure_B is access procedure
+     (x : Integer; y : Integer; z : Integer);
 
    procedure S1 (Call_Back : access procedure (x, y, z : Integer));
-   procedure S2 (Call_Back : access procedure (x : Integer; y : Integer; z : Integer));
+   procedure S2
+     (Call_Back : access procedure (x : Integer; y : Integer; z : Integer));
 
    function F3A (x, y, z : Integer) return Integer is (x + y + z);
-   function F3B (x : Integer; y : Integer; z : Integer) return Integer is (x + y + z);
+   function F3B (x : Integer; y : Integer; z : Integer) return Integer is
+     (x + y + z);
+
+   function F3C (x, y, z : Integer) return Integer;
+   function F3D (x : Integer; y : Integer; z : Integer) return Integer;
 
    function F3Z (x, y, z : Integer) return Integer;
 private

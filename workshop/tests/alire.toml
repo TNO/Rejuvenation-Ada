@@ -1,18 +1,20 @@
 name = "tests"
-description = "tests for rejuvenation"
+description = "Workshop - solutions (as test cases) to exercises"
 version = "0.0.0"
 
 authors = ["Pierre van de Laar"]
 maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
 maintainers-logins = ["pjljvandelaar"]
 
-executables = ["tests"]
+executables = ["test_workshop"]
 
 [[depends-on]]
 aunit = "^22.0.0"
 libadalang = "^22.0.0"
 rejuvenation = "*"
+workshop = "*"
 
 [[pins]]
-rejuvenation = { path = ".." } 
+rejuvenation = { path = "../.." } 
+workshop = { path = ".." } 
 
