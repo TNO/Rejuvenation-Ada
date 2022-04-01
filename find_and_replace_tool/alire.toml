@@ -1,0 +1,17 @@
+name = "find_and_replace_tool"
+description = "Simple find and replace tool based on rejuvenation library"
+version = "0.0.0"
+
+authors = ["Pierre van de Laar"]
+maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
+maintainers-logins = ["pjljvandelaar"]
+
+executables = ["find_and_replace_tool"]
+
+[[depends-on]]
+libadalang = "^22.0.0"
+rejuvenation = "*"
+
+[[pins]]
+rejuvenation = { path = ".." } 
+

@@ -41,7 +41,7 @@ all placeholders in a replace pattern can be called backreferences.
 
 # Examples
 See the [examples](../../examples/Rejuvenation_Examples), 
-the [workshop](../../examples/Rejuvenation_Workshop), and the test cases in the [test project](test_driver.gpr)
+the [workshop](../../examples/Rejuvenation_Workshop), and the test cases in the [test project](tests/tests.gpr)
 for inspiration to use the Rejuvenation Library.
 
 # Tools made using Rejuvenation Library

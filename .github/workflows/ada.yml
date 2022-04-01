@@ -20,7 +20,19 @@ jobs:
       uses: alire-project/setup-alire@v1
 
     - name: Build
-      run: cd src/ && alr build
+      run: cd src && alr build
 
     - name: Test
-      run: cd src/tests && alr run
+      run: cd tests && alr run
+
+    - name: Examples
+      run: cd examples && alr run
+
+    - name: Workshop
+      run: cd workshop && alr run
+
+    - name: Find Tool
+      run: cd find_tool && alr build
+
+    - name: Find and Replace Tool
+      run: cd find_and_replace_tool && alr build
