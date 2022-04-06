@@ -39,3 +39,6 @@ jobs:
 
     - name: Find and Replace Tool
       run: cd find_and_replace_tool && alr build
+
+    - name: Generator
+      run: cd generator-developers_only && alr build
