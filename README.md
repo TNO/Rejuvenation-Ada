@@ -40,10 +40,10 @@ In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expr
 all placeholders in a replace pattern can be called backreferences.
 
 # Examples
-See the [examples](../../examples/Rejuvenation_Examples), 
-the [workshop](../../examples/Rejuvenation_Workshop), and the test cases in the [test project](tests/tests.gpr)
+See the [examples](examples), 
+the [workshop](workshop), and the test cases in the [test project](tests/tests.gpr)
 for inspiration to use the Rejuvenation Library.
 
 # Tools made using Rejuvenation Library
-* [Rejuvenation Find](../../tools/Rejuvenation_Find) finds a pattern in a given project
-* [Rejuvenation Find And Replace](../../tools/Rejuvenation_Find_And_Replace) finds a pattern and replaces it with another in a given project
+* [Find Tool](find_tool) finds a pattern in a given project
+* [Find And Replace Tool](find_and_replace_tool) finds a pattern and replaces it with another in a given project
