@@ -24,24 +24,26 @@ We want to improve this behaviour soon. See https://github.com/TNO/Renaissance-A
 
 A find pattern might contain multiple different placeholders.
 
-A find pattern might contain the same placeholders multiple times.
+A find pattern might contain the same placeholder multiple times.
 This add a constraint to the find process:
-A match will only be found when all occurrence of the same placeholders are identical.
+A match will only be found when all occurrence of the same placeholder are identical.
 Note that universities are still researching what the best definition of identical is.
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
-the term backreference is used to denote a placeholders that reoccurs.
+the term backreference is used to denote a placeholder that reoccurs.
 
 ### placeholders in replace patterns
 
-A placeholders in a replace pattern always refers to that placeholders in the find pattern.
-A placeholders in a replace pattern that does not occur in the find pattern is thus an error.
-The placeholders in the replace pattern will be replaced by the value of that placeholders in the match of the find pattern.
+A placeholder in a replace pattern always refers to that placeholder in the find pattern.
+A placeholder in a replace pattern that does not occur in the find pattern is thus an error.
+A placeholder in the replace pattern will be replaced by the value of that placeholder in the match of the find pattern.
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
 all placeholders in a replace pattern can be called backreferences.
 
 # Examples
-See the [examples](examples), 
-the [workshop](workshop), and the test cases in the [test project](tests/tests.gpr)
+See 
+the [examples](examples), 
+the [workshop](workshop), and 
+the [tests](tests)
 for inspiration to use the Rejuvenation Library.
 
 # Tools made using Rejuvenation Library

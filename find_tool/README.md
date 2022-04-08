@@ -8,28 +8,43 @@ Find matches code based on their [AST](https://en.wikipedia.org/wiki/Abstract_sy
 So it is independent of layout and presence of comment.
 
 
-## wild cards
+## placeholders
 
-There are two types of wildcards, those starting with "$S_" and those starting with "$M_".
+There are two types of placeholders, those starting with "$S_" and those starting with "$M_".
 Any alphanumeric string is allowed to follow after those prefixes.
 
-"$S_" wildcards allow one to match a single AST node, be that a single expression, a single statement, a single argument, or anything else.
-As long as Ada parses it to a single AST node, the "$S_" wildcard can match it.
+"$S_" placeholders allow one to match a single AST node, be that a single expression, a single statement, a single argument, or anything else.
+As long as Ada parses it to a single AST node, the "$S_" placeholders can match it.
 
-"$M_" wildcards allow one to match a list of AST nodes, i.e., zero or more nodes. 
+"$M_" placeholders allow one to match a list of AST nodes, i.e., zero or more nodes.
 
-## wild cards in find patterns
+## placeholders in find patterns
 
-A find pattern might contain multiple different wild cards.
+A find pattern might contain multiple different placeholders.
 
-A find pattern might contain the same wild card multiple times.
+A find pattern might contain the same placeholder multiple times.
 This add a constraint to the find process:
-A match will only be found when all occurrence of the same wild card are identical.
+A match will only be found when all occurrence of the same placeholder are identical.
 Note that universities are still researching what the best definition of identical is.
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
-the term backreference is used to denote a wild card that reoccurs.
+the term backreference is used to denote a placeholder that reoccurs.
 
-## examples
+## Examples
 
-See [predefined_rewriters.ads](https://github.com/TNO/Renaissance-Ada/blob/main/src/libraries/Rewriters_Lib/src/predefined_rewriters.ads)
-for many examples.
+### Double Negation
+
+Find pattern for double negation
+```ada
+not (not $S_Condition)
+```
+
+### For All
+
+Ada 2012 has [Quantified expressions](http://www.ada-auth.org/standards/12rat/html/Rat12-3-4.html).
+Find pattern for code that is equivalent to the `for all` expression
+```ada
+for $S_Element of $S_Elements loop 
+    if $S_Condition then return false; end if; 
+end loop;
+return true;
+```
