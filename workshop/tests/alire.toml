@@ -1,4 +1,4 @@
-name = "tests"
+name = "tests_workshop"
 description = "Workshop - solutions (as test cases) to exercises"
 version = "0.0.0"
 
