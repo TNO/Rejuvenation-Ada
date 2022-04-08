@@ -59,8 +59,9 @@ $S_Condition
 
 ### For All
 
-Ada 2012 has [Quantified expressions](http://www.ada-auth.org/standards/12rat/html/Rat12-3-4.html).
-Find pattern for code that is equivalent to the `for all` expression
+Ada 2012 has [quantified expressions](http://www.ada-auth.org/standards/12rat/html/Rat12-3-4.html).
+
+Find pattern for code that is equivalent to returning a `for all` expression
 ```ada
 for $S_Element of $S_Elements loop 
     if $S_Condition then return false; end if; 
