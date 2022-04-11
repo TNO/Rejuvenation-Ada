@@ -9,36 +9,79 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
-    
     runs-on: ${{ matrix.os }}
-  
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      
-    - name: Alire
-      uses: alire-project/setup-alire@v1
-
+    - uses: actions/checkout@v2
+    - uses: alire-project/setup-alire@v1
     - name: Build
       run: cd src && alr build
 
+  test:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: alire-project/setup-alire@v1
     - name: Test
       run: cd tests && alr run
 
+  examples:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: alire-project/setup-alire@v1
     - name: Examples
       run: cd examples && alr run
 
+  workshop:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: alire-project/setup-alire@v1
     - name: Workshop
       run: cd workshop && alr build
 
     - name: Workshop Answers
       run: cd workshop/tests && alr run
 
+  find_tool:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: alire-project/setup-alire@v1
     - name: Find Tool
       run: cd find_tool && alr build
 
+  find_and_replace_tool:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: alire-project/setup-alire@v1
     - name: Find and Replace Tool
       run: cd find_and_replace_tool && alr build
 
+  generator:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: alire-project/setup-alire@v1
     - name: Generator
       run: cd generator-developers_only && alr build
+
