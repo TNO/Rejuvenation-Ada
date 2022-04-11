@@ -1,9 +1,9 @@
-# Rejuvenation Library
+# Rejuvenation
 
-The Rejuvenation Library enables analysis and manipulation of Ada code based on concrete patterns.
-Both find- and replace-functionality are based on the [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
-of the concrete patterns.
-Placeholders are allowed in these concrete patterns.
+The Rejuvenation library enables analysis and manipulation of Ada code based on concrete patterns.
+Analysis and manipulation is based on the [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+of Ada and hence is insensitive for layout and the presence of comments.
+Both find- and replace-functionality are specified in concrete Ada patterns extended with Placeholders.
 
 ## placeholders
 
