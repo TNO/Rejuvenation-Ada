@@ -144,60 +144,6 @@ package body Test_String_Utils is
       TestCase (Empty, Empty, Empty);
    end Test_all_empty;
 
-   procedure
-   Test_string_not_start_with_prefix_strlen_larger_than_prefix_length
-     (T : in out Test_Case'Class);
-   procedure
-   Test_string_not_start_with_prefix_strlen_larger_than_prefix_length
-     (T : in out Test_Case'Class)
-   is
-      pragma Unreferenced (T);
-   begin
-      Assert
-        (Actual =>
-           Replace_Prefix
-             (String_With_Prefix => "aa", Prefix => "b", New_Prefix => "c"),
-         Expected => "ca", Message => "Robustness not as expected.");
-   end Test_string_not_start_with_prefix_strlen_larger_than_prefix_length;
-
-   procedure Test_string_not_start_with_prefix_strlen_equal_to_prefix_length
-     (T : in out Test_Case'Class);
-   procedure Test_string_not_start_with_prefix_strlen_equal_to_prefix_length
-     (T : in out Test_Case'Class)
-   is
-      pragma Unreferenced (T);
-   begin
-      Assert
-        (Actual =>
-           Replace_Prefix
-             (String_With_Prefix => "a", Prefix => "b", New_Prefix => "c"),
-         Expected => "c", Message => "Robustness not as expected.");
-   end Test_string_not_start_with_prefix_strlen_equal_to_prefix_length;
-
-   --  part of
-   --  Test_string_not_start_with_prefix_strlen_smaller_than_prefix_length
-   --  located here to prevent: subprogram must not be deeper than access type
-   procedure Failing;
-   procedure Failing is
-      Example : constant String :=
-        Replace_Prefix
-          (String_With_Prefix => "a", Prefix => "bb", New_Prefix => "c");
-   begin
-      pragma Unreferenced (Example);
-   end Failing;
-
-   procedure
-   Test_string_not_start_with_prefix_strlen_smaller_than_prefix_length
-     (T : in out Test_Case'Class);
-   procedure
-   Test_string_not_start_with_prefix_strlen_smaller_than_prefix_length
-     (T : in out Test_Case'Class)
-   is
-      pragma Unreferenced (T);
-   begin
-      Assert_Exception (Failing'Access, "Robustness not as expected.");
-   end Test_string_not_start_with_prefix_strlen_smaller_than_prefix_length;
-
    --  Test plumbing
 
    overriding function Name
@@ -239,24 +185,6 @@ package body Test_String_Utils is
          "Empty New Prefix and Remainder");
       Registration.Register_Routine
         (T, Test_all_empty'Access, "All Empty");
-      Registration.Register_Routine
-        (T,
-         Test_string_not_start_with_prefix_strlen_larger_than_prefix_length'
-           Access,
-         "Robustness: String not start with prefix. "
-         & "String length larger than prefix length");
-      Registration.Register_Routine
-        (T,
-         Test_string_not_start_with_prefix_strlen_equal_to_prefix_length'
-           Access,
-         "Robustness: String not start with prefix. "
-         & "String length equal to prefix length");
-      Registration.Register_Routine
-        (T,
-         Test_string_not_start_with_prefix_strlen_smaller_than_prefix_length'
-           Access,
-         "Robustness: String not start with prefix. "
-         & "String length smaller than prefix length");
    end Register_Tests;
 
 end Test_String_Utils;

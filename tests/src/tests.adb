@@ -1,10 +1,14 @@
-with AUnit.Reporter.Text;
-with AUnit.Run;
-with Rejuvenation_Suite; use Rejuvenation_Suite;
+with AUnit;                 use AUnit;
+with AUnit.Reporter.Text;   use AUnit.Reporter.Text;
+with AUnit.Run;             use AUnit.Run;
+with GNAT.OS_Lib;           use GNAT.OS_Lib;
+with Rejuvenation_Suite;    use Rejuvenation_Suite;
 
 procedure Tests is
-   procedure Runner is new AUnit.Run.Test_Runner (Suite);
-   Reporter : AUnit.Reporter.Text.Text_Reporter;
+   function Runner is new Test_Runner_With_Status (Suite);
+   Reporter : Text_Reporter;
 begin
-   Runner (Reporter);
+   if Runner (Reporter) /= Success then
+      OS_Exit (1);
+   end if;
 end Tests;

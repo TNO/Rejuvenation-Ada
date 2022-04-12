@@ -1,6 +1,6 @@
 name = "rejuvenation"
 description = "Analysis and manipulation of Ada code based on concrete patterns"
-version = "0.1.0"
+version = "0.1.1"
 licenses = "BSD-3-Clause"
 website = "https://github.com/TNO/Rejuvenation-Ada"
 tags = ["analysis", "manipulation", "transformation"]
