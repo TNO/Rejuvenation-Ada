@@ -46,6 +46,8 @@ the [workshop](workshop), and
 the [tests](tests)
 for inspiration to use the Rejuvenation Library.
 
-# Tools made using Rejuvenation Library
+# Tools made using Rejuvenation
 * [Find Tool](find_tool) finds a pattern in a given project
 * [Find And Replace Tool](find_and_replace_tool) finds a pattern and replaces it with another in a given project
+
+[![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/rejuvenation.json)](https://alire.ada.dev/crates/rejuvenation.html)
