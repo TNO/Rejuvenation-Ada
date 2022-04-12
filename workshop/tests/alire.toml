@@ -6,7 +6,7 @@ authors = ["Pierre van de Laar"]
 maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
 maintainers-logins = ["pjljvandelaar"]
 
-executables = ["test_workshop"]
+executables = ["tests_workshop"]
 
 [[depends-on]]
 aunit = "^22.0.0"
