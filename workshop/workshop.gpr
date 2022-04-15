@@ -1,5 +1,5 @@
 with "config/workshop_config.gpr";
-with "../rejuvenation_settings.gpr";
+with "../settings/rejuvenation_settings.gpr";
 project Workshop is
 
    for Library_Name use "Workshop";

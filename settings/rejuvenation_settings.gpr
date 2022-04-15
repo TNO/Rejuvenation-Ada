@@ -84,7 +84,7 @@ abstract project Rejuvenation_Settings is
 
    package Check is
       for Default_Switches ("Ada") use
-        ("-rules", "-from=" & Project'Project_dir & "settings/gnatcheck.rules");
+        ("-rules", "-from=" & Project'Project_dir & "gnatcheck.rules");
    end Check;
 
    package CodePeer is

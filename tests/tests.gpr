@@ -1,5 +1,5 @@
 with "config/tests_config.gpr";
-with "../rejuvenation_settings.gpr";
+with "../settings/rejuvenation_settings.gpr";
 project Tests is
 
    for Source_Dirs use ("src");

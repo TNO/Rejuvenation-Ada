@@ -1,5 +1,5 @@
 with "config/find_tool_config.gpr";
-with "../rejuvenation_settings.gpr";
+with "../settings/rejuvenation_settings.gpr";
 
 project Find_Tool is
 

@@ -1,5 +1,5 @@
 with "config/rejuvenation_config.gpr";
-with "rejuvenation_settings.gpr";
+with "settings/rejuvenation_settings.gpr";
 project Rejuvenation is
 
    for Library_Name use "Rejuvenation";
