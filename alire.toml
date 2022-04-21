@@ -14,6 +14,6 @@ libadalang = "^22.0.0"          #  remove this dependency when libadalang is
                                 #  already installed on your system
                                 #  and accessible via your GPR_PROJECT_PATH
 
-libadalang_tools = "^22.0.0"    #  needs gnatpp from libadalang_tools installed on PATH
-                                #  Alire is not yet capable to add gnatpp to PATH.
-                                #  see https://github.com/AdaCore/libadalang-tools/issues/21
+# libadalang_tools = "^22.0.0"    #  needs gnatpp from libadalang_tools installed on PATH
+                                  #  Alire is not yet capable to add gnatpp to PATH.
+                                  #  see https://github.com/AdaCore/libadalang-tools/issues/21
