@@ -1,4 +1,6 @@
 with Ada.Assertions;              use Ada.Assertions;
+with Ada.Text_IO;                 use Ada.Text_IO;
+with GNAT.OS_Lib;                 use GNAT.OS_Lib;
 with Interfaces.C;                use Interfaces.C;
 with Rejuvenation.File_Utils;     use Rejuvenation.File_Utils;
 with Rejuvenation.Indentation;    use Rejuvenation.Indentation;
@@ -8,6 +10,8 @@ with Rejuvenation.Node_Locations; use Rejuvenation.Node_Locations;
 with Rejuvenation.String_Utils;   use Rejuvenation.String_Utils;
 
 package body Rejuvenation.Pretty_Print is
+   function Sys (Arg : char_array) return Integer;
+   pragma Import (C, Sys, "system");
 
    procedure Surround_Node_By_Pretty_Print_Section
      (T_R : in out Text_Rewrite'Class; Node : Ada_Node'Class)
@@ -71,21 +75,17 @@ package body Rejuvenation.Pretty_Print is
    end Remove_Nested_Pretty_Print_Flags;
 
    procedure Pretty_Print_Sections (Filename : String; Projectname : String) is
-      function Sys (Arg : char_array) return Integer;
-      pragma Import (C, Sys, "system");
-
       Command : constant String :=
         "gnatpp" & " -P " & Projectname & " --pp-on=" & Flag_On &
         " --pp-off=" & Flag_Off & " " & Filename;
-      Ret_Val : Integer;
    begin
       Remove_Nested_Pretty_Print_Flags (Filename);
       declare
          Original_Content : constant String := Get_String_From_File (Filename);
          Original_Last_Char : constant Character :=
            Original_Content (Original_Content'Last);
+         Ret_Val : constant Integer := Sys (To_C (Command));
       begin
-         Ret_Val := Sys (To_C (Command));
          Assert
            (Check   => Ret_Val = 0,
             Message => "System call to gnatpp returned " & Ret_Val'Image);
@@ -121,4 +121,24 @@ package body Rejuvenation.Pretty_Print is
       Write_String_To_File (New_Contents, Filename);
    end Remove_Pretty_Print_Flags;
 
+   procedure Enforce_GNATPP_In_Environment;
+   procedure Enforce_GNATPP_In_Environment is
+      Command : constant String := "gnatpp --version";
+      Ret_Val : constant Integer := Sys (To_C (Command));
+   begin
+      if Ret_Val /= 0 then
+         Put_Line (Standard_Error,
+                   "System call to gnatpp returned " & Ret_Val'Image & ".");
+         Put_Line (Standard_Error,
+                   "Probably, gnatpp not present on your PATH.");
+         Put_Line (Standard_Error,
+                   "Please, install gnatpp using "
+                   & "`alr get --build libadalang_tools`"
+                   & " on your PATH");
+         OS_Exit (99);
+      end if;
+   end Enforce_GNATPP_In_Environment;
+
+begin
+   Enforce_GNATPP_In_Environment;
 end Rejuvenation.Pretty_Print;
