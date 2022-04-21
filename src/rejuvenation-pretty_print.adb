@@ -53,8 +53,8 @@ package body Rejuvenation.Pretty_Print is
 
    procedure Remove_Cr_Cr_Lf (Filename : String);
    procedure Remove_Cr_Cr_Lf (Filename : String)
-     --  repair gnatpp screwed up
-     --  see https://gt3-prod-1.adacore.com/#/tickets/U617-042
+      --  repair gnatpp screwed up
+      --  see https://gt3-prod-1.adacore.com/#/tickets/U617-042
       is
       Contents       : constant String := Get_String_From_File (Filename);
       Final_Contents : constant String :=
@@ -65,8 +65,7 @@ package body Rejuvenation.Pretty_Print is
    end Remove_Cr_Cr_Lf;
 
    procedure Remove_Nested_Pretty_Print_Flags (Filename : String);
-   procedure Remove_Nested_Pretty_Print_Flags (Filename : String)
-   is
+   procedure Remove_Nested_Pretty_Print_Flags (Filename : String) is
       Contents       : constant String := Get_String_From_File (Filename);
       Final_Contents : constant String :=
         Remove_Nested_Flags (Contents, Pretty_Print_On, Pretty_Print_Off, 1);
@@ -74,10 +73,14 @@ package body Rejuvenation.Pretty_Print is
       Write_String_To_File (Final_Contents, Filename);
    end Remove_Nested_Pretty_Print_Flags;
 
-   procedure Pretty_Print_Sections (Filename : String; Projectname : String) is
+   procedure Pretty_Print_Sections_Options
+     (Filename : String; Options : String);
+   procedure Pretty_Print_Sections_Options
+     (Filename : String; Options : String)
+   is
       Command : constant String :=
-        "gnatpp" & " -P " & Projectname & " --pp-on=" & Flag_On &
-        " --pp-off=" & Flag_Off & " " & Filename;
+        "gnatpp" & Options & " --pp-on=" & Flag_On & " --pp-off=" & Flag_Off &
+        " " & Filename;
    begin
       Remove_Nested_Pretty_Print_Flags (Filename);
       declare
@@ -105,6 +108,16 @@ package body Rejuvenation.Pretty_Print is
          end;
       end;
       Remove_Cr_Cr_Lf (Filename);
+   end Pretty_Print_Sections_Options;
+
+   procedure Pretty_Print_Sections (Filename : String) is
+   begin
+      Pretty_Print_Sections_Options (Filename, "");
+   end Pretty_Print_Sections;
+
+   procedure Pretty_Print_Sections (Filename : String; Projectname : String) is
+   begin
+      Pretty_Print_Sections_Options (Filename, " -P " & Projectname);
    end Pretty_Print_Sections;
 
    procedure Remove_Pretty_Print_Flags (Filename : String) is
@@ -123,18 +136,19 @@ package body Rejuvenation.Pretty_Print is
 
    procedure Enforce_GNATPP_In_Environment;
    procedure Enforce_GNATPP_In_Environment is
-      Command : constant String := "gnatpp --version";
+      Command : constant String  := "gnatpp --version";
       Ret_Val : constant Integer := Sys (To_C (Command));
    begin
       if Ret_Val /= 0 then
-         Put_Line (Standard_Error,
-                   "System call to gnatpp returned " & Ret_Val'Image & ".");
-         Put_Line (Standard_Error,
-                   "Probably, gnatpp not present on your PATH.");
-         Put_Line (Standard_Error,
-                   "Please, install gnatpp using "
-                   & "`alr get --build libadalang_tools`"
-                   & " on your PATH");
+         Put_Line
+           (Standard_Error,
+            "System call to gnatpp returned " & Ret_Val'Image & ".");
+         Put_Line
+           (Standard_Error, "Probably, gnatpp not present on your PATH.");
+         Put_Line
+           (Standard_Error,
+            "Please, install gnatpp using " &
+            "`alr get --build libadalang_tools`" & " on your PATH");
          OS_Exit (99);
       end if;
    end Enforce_GNATPP_In_Environment;

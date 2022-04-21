@@ -1,4 +1,3 @@
-with Ada.Directories;            use Ada.Directories;
 with Rejuvenation.Text_Rewrites; use Rejuvenation.Text_Rewrites;
 
 package Rejuvenation.Pretty_Print is
@@ -46,22 +45,21 @@ package Rejuvenation.Pretty_Print is
    --  A Turn_Pretty_Printing_Initially_Off function should be
    --  called exactly once.
 
-   Standard_Options_Project : constant String;
-   --  Reference to the standard options project (of Nexperia)
+   procedure Pretty_Print_Sections (Filename : String);
+   --  Execute step 3: Pretty print sections between the pretty print flags
+   --  Use the default pretty print options.
+   --  A Pretty_Print_Sections function should be called exactly once.
 
    procedure Pretty_Print_Sections (Filename : String; Projectname : String);
    --  Execute step 3: Pretty print sections between the pretty print flags
-   --  This function should be called exactly once.
+   --  Use the pretty print options as specified by the project.
+   --  A Pretty_Print_Sections function should be called exactly once.
 
    procedure Remove_Pretty_Print_Flags (Filename : String);
    --  Execute step 4: Remove pretty print flags
    --  This function should be called exactly once.
 
 private
-
-   Standard_Options_Project : constant String :=
-     Compose ("C:\path\to\Renaissance-Ada\src\libraries\Standard_Options",
-              "standard_options", "gpr");
 
    Preemable : constant String := "--";
    Flag_On   : constant String := "!rej_on";
