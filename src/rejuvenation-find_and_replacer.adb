@@ -16,8 +16,10 @@ package body Rejuvenation.Find_And_Replacer is
    procedure Find_And_Replace
      (TR : in out Text_Rewrite'Class; Node : Ada_Node'Class;
       Find_Pattern, Replace_Pattern :        Pattern;
-      Accept_Match :        Match_Accepter := Accept_All_Matches'Access;
-      Before, After                 :        Node_Location  := No_Trivia)
+      Accept_Match                  :        not null access function
+        (Match : Match_Pattern) return Boolean :=
+        Accept_All_Matches'Access;
+      Before, After : Node_Location := No_Trivia)
    is
       function Get_Placeholder_Replacement (Match : Match_Pattern) return Map;
       function Get_Placeholder_Replacement (Match : Match_Pattern) return Map
@@ -78,9 +80,11 @@ package body Rejuvenation.Find_And_Replacer is
    end Find_And_Replace;
 
    function Find_And_Replace
-     (File_Path     : String; Find_Pattern, Replace_Pattern : Pattern;
-      Accept_Match  : Match_Accepter := Accept_All_Matches'Access;
-      Before, After : Node_Location  := No_Trivia) return Boolean
+     (File_Path    : String; Find_Pattern, Replace_Pattern : Pattern;
+      Accept_Match : not null access function
+        (Match : Match_Pattern) return Boolean :=
+        Accept_All_Matches'Access;
+      Before, After : Node_Location := No_Trivia) return Boolean
    is
       Ctx       : constant Analysis_Context := Create_Context;
       File_Unit : constant Analysis_Unit    := Ctx.Get_From_File (File_Path);
