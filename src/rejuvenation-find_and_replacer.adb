@@ -41,9 +41,9 @@ package body Rejuvenation.Find_And_Replacer is
                      TN : Text_Rewrite :=
                        Make_Text_Rewrite_Nodes
                          (Placeholder_Nodes.First_Element,
-                          Placeholder_Nodes.Last_Element, All_Trivia,
-                          All_Trivia);
-                     --  always include comments of place holders
+                          Placeholder_Nodes.Last_Element,
+                          Before,
+                          After);
                   begin
                      for Node of Placeholder_Nodes loop
                         Find_And_Replace
