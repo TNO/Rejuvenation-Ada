@@ -1,4 +1,5 @@
 with Ada.Directories;             use Ada.Directories;
+with Ada.Strings.Unbounded;       use Ada.Strings.Unbounded;
 with GNATCOLL.Projects;           use GNATCOLL.Projects;
 with GNATCOLL.VFS;                use GNATCOLL.VFS;
 with Libadalang.Project_Provider; use Libadalang.Project_Provider;
@@ -8,7 +9,7 @@ package body Rejuvenation.Simple_Factory is
 
    function Diagnostics_To_String (Unit : Analysis_Unit'Class) return String;
    --  Diagnostics to string
-   --  ends with line feed
+   --  ends with line feed (when Diagnostics is present)
 
    function Diagnostics_To_String (Unit : Analysis_Unit'Class) return String is
       Message : Unbounded_String;
@@ -107,12 +108,12 @@ package body Rejuvenation.Simple_Factory is
 
    function Get_Ada_Source_Files_From_Project
      (Project_Filename : String; Recursive : Boolean := True)
-      return Unbounded_Strings.Vector
+      return String_Vectors.Vector
    is
       Project_File : constant Virtual_File := Create (+Project_Filename);
       Env          : Project_Environment_Access;
       Project      : constant Project_Tree_Access := new Project_Tree;
-      Results      : Unbounded_Strings.Vector;
+      Results      : String_Vectors.Vector;
    begin
       Initialize (Env);
       Project.Load (Project_File, Env);
@@ -120,7 +121,7 @@ package body Rejuvenation.Simple_Factory is
         (Recursive => Recursive, Include_Externally_Built => False).all
       loop
          if Is_Ada_File (Project, File) then
-            Results.Append (To_Unbounded_String (+File.Full_Name));
+            Results.Append (+File.Full_Name);
          end if;
       end loop;
       return Results;
@@ -128,15 +129,15 @@ package body Rejuvenation.Simple_Factory is
 
    function Get_Ada_Source_Files_From_Directory
      (Directory_Name : String; Recursive : Boolean := True)
-      return Unbounded_Strings.Vector
+      return String_Vectors.Vector
    is
-      Results : Unbounded_Strings.Vector;
+      Results : String_Vectors.Vector;
 
       procedure Append (Item : Directory_Entry_Type);
 
       procedure Append (Item : Directory_Entry_Type) is
       begin
-         Results.Append (To_Unbounded_String (Full_Name (Item)));
+         Results.Append (Full_Name (Item));
       end Append;
    begin
       Walk_Files

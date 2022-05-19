@@ -1,13 +1,11 @@
 with Ada.Containers.Vectors;
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Text_IO;           use Ada.Text_IO;
+with String_Vectors;
 
 package Rejuvenation.Simple_Factory is
 
    package Analysis_Units is new Ada.Containers.Vectors
      (Positive, Analysis_Unit);
-   package Unbounded_Strings is new Ada.Containers.Vectors
-     (Positive, Unbounded_String);
 
    Parse_Exception : exception;
 
@@ -18,7 +16,7 @@ package Rejuvenation.Simple_Factory is
 
    function Get_Ada_Source_Files_From_Project
      (Project_Filename : String; Recursive : Boolean := True)
-      return Unbounded_Strings.Vector;
+      return String_Vectors.Vector;
    --  Return the file paths of all Ada files in the given project
    --  When the project contains subprojects,
    --  Ada files in those subprojects will be include based on the
@@ -27,7 +25,7 @@ package Rejuvenation.Simple_Factory is
 
    function Get_Ada_Source_Files_From_Directory
      (Directory_Name : String; Recursive : Boolean := True)
-      return Unbounded_Strings.Vector;
+      return String_Vectors.Vector;
    --  Return the file paths of all Ada files in the given directory
    --  When the directory contains subdirectories,
    --  Ada files in those subdirectories will be include based on the
