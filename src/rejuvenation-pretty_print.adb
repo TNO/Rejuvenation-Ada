@@ -16,22 +16,8 @@ package body Rejuvenation.Pretty_Print is
    procedure Surround_Node_By_Pretty_Print_Section
      (T_R : in out Text_Rewrite'Class; Node : Ada_Node'Class)
    is
-      function Predicate (Node : Ada_Node'Class) return Boolean;
-
-      function Predicate (Node : Ada_Node'Class) return Boolean
-      --  workaround for https://gt3-prod-1.adacore.com/#/tickets/UB17-034
-      --  not only look for node on separate lines,
-      --  but also require a particular kind
-      is
-      begin
-         return
-           Node.Kind in Ada_Stmt | Ada_Stmt_List | Ada_Basic_Decl |
-               Ada_Compilation_Unit
-           and then Node_On_Separate_Lines (Node);
-      end Predicate;
-
       Ctx : constant Ada_Node :=
-        Get_Reflexive_Ancestor (Node, Predicate'Access);
+        Get_Reflexive_Ancestor (Node, Node_On_Separate_Lines'Access);
    begin
       T_R.Prepend (Ctx, Pretty_Print_On, Before => Trivia_On_Same_Line);
       T_R.Append (Ctx, Pretty_Print_Off, After => Trivia_On_Same_Line);
