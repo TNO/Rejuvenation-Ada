@@ -120,7 +120,7 @@ package body Rejuvenation.Match_Patterns is
             FirstToken : constant Token_Reference := First_Node.Token_Start;
             LastToken  : constant Token_Reference := Last_Node.Token_End;
             Unit       : constant Analysis_Unit   := First_Node.Unit;
-            First : constant Integer := Raw_Data (FirstToken).Source_First;
+            First      : constant Integer := Raw_Data (FirstToken).Source_First;
             Last       : constant Integer := Raw_Data (LastToken).Source_Last;
          begin
             return Encode (Unit.Text (First .. Last), Unit.Get_Charset);
@@ -479,21 +479,6 @@ package body Rejuvenation.Match_Patterns is
      (MP       : in out Match_Pattern; Pattern : Ada_Node'Class;
       Instance :        Ada_Node'Class) return Boolean
    is
-
-      function Disambiguate_Node (Node : Ada_Node) return Ada_Node;
-      --  The same Ada code can be interpreted as different Nodes
-      --  e.g. an defining name and an indentifier
-      function Disambiguate_Node (Node : Ada_Node) return Ada_Node
-      is
-      begin
-         if Node.Is_Null or else Node.Children_Count /= 1 then
-            return Node;
-         else
-            return Disambiguate_Node (Node.First_Child);
-               --  Robustness: it might happen multiple times.
-         end if;
-      end Disambiguate_Node;
-
       Placeholder_Name : constant String := Get_Placeholder_Name (Pattern);
    begin
       if MP.Has_Single (Placeholder_Name) then
@@ -501,9 +486,7 @@ package body Rejuvenation.Match_Patterns is
             Earlier_Mapping : constant Ada_Node :=
               MP.Get_Single_As_Node (Placeholder_Name);
          begin
-            if not Are_Equal_In_Ada
-               (Disambiguate_Node (Earlier_Mapping),
-                Disambiguate_Node (Instance.As_Ada_Node))
+            if not Are_Equal_In_Ada (Earlier_Mapping, Instance.As_Ada_Node)
             then
                raise Inconsistent_Placeholder_Values_Exception;
             end if;

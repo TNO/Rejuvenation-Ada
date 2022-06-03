@@ -302,6 +302,16 @@ package body Test_Match_Patterns is
          "declare x : Boolean := False; begin x := True; end;");
    end Test_Back_Reference_Different_Kind;
 
+   procedure Test_Back_Reference_Mismatch (T : in out Test_Case'Class);
+   procedure Test_Back_Reference_Mismatch (T : in out Test_Case'Class) is
+      pragma Unreferenced (T);
+
+   begin
+      Assert_Mismatch_Full
+        (Expr_Rule, "$S_Var = $S_Val1 or else $S_Var = $S_Val2",
+         "x = null or else x.all = """"");
+   end Test_Back_Reference_Mismatch;
+
    procedure Test_Call_Mismatch_No_Arguments (T : in out Test_Case'Class);
    procedure Test_Call_Mismatch_No_Arguments (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
@@ -1008,6 +1018,9 @@ package body Test_Match_Patterns is
       Registration.Register_Routine
         (T, Test_Back_Reference_Different_Kind'Access,
          "Backreferences in Find - different kind");
+      Registration.Register_Routine
+        (T, Test_Back_Reference_Mismatch'Access,
+         "Backreferences in Find - no match");
       Registration.Register_Routine
         (T, Test_Stmt'Access, "Value of Stmt placeholder");
       Registration.Register_Routine (T, Test_Label'Access, "Match with label");

@@ -60,46 +60,61 @@ package body Rejuvenation.Utils is
         Equal_Case_Insensitive (Raw_Signature (Node1), Raw_Signature (Node2));
    end Are_Equal_Case_Insensitive_As_Raw_Signature;
 
-   function Are_Equal_In_Ada (Node1, Node2 : Ada_Node'Class) return Boolean
-   is
+   function Are_Equal_In_Ada (Node1, Node2 : Ada_Node'Class) return Boolean is
+      function Ensure_Ada_Token
+        (Iterator : Token_Iterator; Token : Token_Reference)
+         return Token_Reference;
+      --  If token is NOT an Ada token (i.e. trivia)
+      --  move it to an Ada Token
+      --  Note: No_Token is considered an Ada token.
+      function Ensure_Ada_Token
+        (Iterator : Token_Iterator; Token : Token_Reference)
+         return Token_Reference
+      is
+      begin
+         if Token = No_Token
+           or else Kind (Data (Token)) not in Ada_Comment | Ada_Whitespace
+         then
+            return Token;
+         else
+            return Ensure_Ada_Token (Iterator, Next_Token (Iterator, Token));
+         end if;
+      end Ensure_Ada_Token;
+
+      Iterator1 : constant Token_Iterator := Node1.Token_Range;
+      Iterator2 : constant Token_Iterator := Node2.Token_Range;
+
+      Token1 : Token_Reference :=
+        Ensure_Ada_Token (Iterator1, First_Token (Iterator1));
+      Token2 : Token_Reference :=
+        Ensure_Ada_Token (Iterator2, First_Token (Iterator2));
    begin
-      if Node1.Is_Null or else Node2.Is_Null then
-         return Node1.Is_Null = Node2.Is_Null;
-      end if;
-
-      if Node1.Kind /= Node2.Kind then
-         return False;
-      end if;
-
-      if Node1.Children_Count /= Node2.Children_Count then
-         return False;
-      end if;
-
-      if Node1.Children_Count = 0 then
-         case Node1.Kind is
-            when Ada_String_Literal | Ada_Char_Literal =>
-               return Are_Equal_As_Raw_Signature (Node1, Node2);
-            when Ada_Int_Literal =>
-               declare
-                  Int_Literal1 : constant Int_Literal :=
-                    Node1.As_Int_Literal;
-                  Int_Literal2 : constant Int_Literal :=
-                    Node2.As_Int_Literal;
-               begin
-                  return Int_Literal1.P_Denoted_Value =
-                    Int_Literal2.P_Denoted_Value;
-               end;
-            --  TODO: Add semantic equal Real_Literal
-            when others =>
-               return
-                 Are_Equal_Case_Insensitive_As_Raw_Signature (Node1, Node2);
-         end case;
-      else
-         return (for all Index in 1 .. Node1.Children_Count =>
-                   Are_Equal_In_Ada (Node1.Child (Index), Node2.Child (Index))
-                );
-      end if;
-
+      loop
+         declare
+            type Count_Type is range 0 .. 2;
+            Number_At_End : constant Count_Type :=
+              (if Has_Element (Iterator1, Token1) then 0 else 1) +
+              (if Has_Element (Iterator2, Token2) then 0 else 1);
+         begin
+            case Number_At_End is
+               when 2 =>
+                  return True;
+               when 1 =>
+                  return False;
+               when 0 =>
+                  if Is_Equivalent (Token1, Token2) then
+                     Token1 :=
+                       Ensure_Ada_Token
+                         (Iterator1, Next_Token (Iterator1, Token1));
+                     Token2 :=
+                       Ensure_Ada_Token
+                         (Iterator2, Next_Token (Iterator2, Token2));
+                  else
+                     return False;
+                  end if;
+            end case;
+         end;
+      end loop;
    end Are_Equal_In_Ada;
 
    --  Package (Distributed over files) functionality
