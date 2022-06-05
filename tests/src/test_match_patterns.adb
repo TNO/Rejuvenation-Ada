@@ -312,6 +312,43 @@ package body Test_Match_Patterns is
          "x = null or else x.all = """"");
    end Test_Back_Reference_Mismatch;
 
+   procedure Test_Placeholder_Equivalence (T : in out Test_Case'Class);
+   procedure Test_Placeholder_Equivalence (T : in out Test_Case'Class) is
+      pragma Unreferenced (T);
+
+      Pattern : constant String := "$S_Val = $S_Val";
+   begin
+      --  Bool
+      Assert_Match_Full
+        (Expr_Rule, Pattern, "True = True");
+      Assert_Match_Full
+        (Expr_Rule, Pattern, "True = true");
+      Assert_Match_Full
+        (Expr_Rule, Pattern, "True = TRUE");
+
+      --  Char
+      Assert_Match_Full
+        (Expr_Rule, Pattern, "'t' = 't'");
+      Assert_Mismatch_Full
+        (Expr_Rule, Pattern, "'t' = 'T'");
+
+      --  String
+      Assert_Match_Full
+        (Expr_Rule, Pattern, """True"" = ""True""");
+      Assert_Mismatch_Full
+        (Expr_Rule, Pattern, """True"" = ""true""");
+      Assert_Mismatch_Full
+        (Expr_Rule, Pattern, """True"" = ""TRUE""");
+
+      --  Integer
+      Assert_Match_Full
+        (Expr_Rule, Pattern, "1000 = 1000");
+      Assert_Match_Full
+        (Expr_Rule, Pattern, "1000 = 1_000");
+      Assert_Match_Full
+        (Expr_Rule, Pattern, "1000 = 1E3");
+   end Test_Placeholder_Equivalence;
+
    procedure Test_Call_Mismatch_No_Arguments (T : in out Test_Case'Class);
    procedure Test_Call_Mismatch_No_Arguments (T : in out Test_Case'Class) is
       pragma Unreferenced (T);
@@ -1021,6 +1058,9 @@ package body Test_Match_Patterns is
       Registration.Register_Routine
         (T, Test_Back_Reference_Mismatch'Access,
          "Backreferences in Find - no match");
+      Registration.Register_Routine
+        (T, Test_Placeholder_Equivalence'Access,
+         "Placeholder equivalence - same as match");
       Registration.Register_Routine
         (T, Test_Stmt'Access, "Value of Stmt placeholder");
       Registration.Register_Routine (T, Test_Label'Access, "Match with label");
