@@ -60,63 +60,6 @@ package body Rejuvenation.Utils is
         Equal_Case_Insensitive (Raw_Signature (Node1), Raw_Signature (Node2));
    end Are_Equal_Case_Insensitive_As_Raw_Signature;
 
-   function Are_Equal_In_Ada (Node1, Node2 : Ada_Node'Class) return Boolean is
-      function Ensure_Ada_Token
-        (Iterator : Token_Iterator; Token : Token_Reference)
-         return Token_Reference;
-      --  If token is NOT an Ada token (i.e. trivia)
-      --  move it to an Ada Token
-      --  Note: No_Token is considered an Ada token.
-      function Ensure_Ada_Token
-        (Iterator : Token_Iterator; Token : Token_Reference)
-         return Token_Reference
-      is
-      begin
-         if Token = No_Token
-           or else Kind (Data (Token)) not in Ada_Comment | Ada_Whitespace
-         then
-            return Token;
-         else
-            return Ensure_Ada_Token (Iterator, Next_Token (Iterator, Token));
-         end if;
-      end Ensure_Ada_Token;
-
-      Iterator1 : constant Token_Iterator := Node1.Token_Range;
-      Iterator2 : constant Token_Iterator := Node2.Token_Range;
-
-      Token1 : Token_Reference :=
-        Ensure_Ada_Token (Iterator1, First_Token (Iterator1));
-      Token2 : Token_Reference :=
-        Ensure_Ada_Token (Iterator2, First_Token (Iterator2));
-   begin
-      loop
-         declare
-            type Count_Type is range 0 .. 2;
-            Number_At_End : constant Count_Type :=
-              (if Has_Element (Iterator1, Token1) then 0 else 1) +
-              (if Has_Element (Iterator2, Token2) then 0 else 1);
-         begin
-            case Number_At_End is
-               when 2 =>
-                  return True;
-               when 1 =>
-                  return False;
-               when 0 =>
-                  if Is_Equivalent (Token1, Token2) then
-                     Token1 :=
-                       Ensure_Ada_Token
-                         (Iterator1, Next_Token (Iterator1, Token1));
-                     Token2 :=
-                       Ensure_Ada_Token
-                         (Iterator2, Next_Token (Iterator2, Token2));
-                  else
-                     return False;
-                  end if;
-            end case;
-         end;
-      end loop;
-   end Are_Equal_In_Ada;
-
    --  Package (Distributed over files) functionality
 
    function In_Same_Package (Unit1, Unit2 : Analysis_Unit) return Boolean is
@@ -124,6 +67,8 @@ package body Rejuvenation.Utils is
       Unit2_Filename : constant String := Unit2.Get_Filename;
    begin
       --  TODO: should the comparison be case insensitive?
+      --  TODO: This works for packages X defined in X.ads and X.adb
+      --        but does it also work for separates?
       return
         Unit1_Filename (Unit1_Filename'First .. Unit1_Filename'Last - 1) =
         Unit2_Filename (Unit2_Filename'First .. Unit2_Filename'Last - 1);

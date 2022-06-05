@@ -31,20 +31,6 @@ package Rejuvenation.Utils is
 
    --  Package (Distributed over files) functionality
 
-   function Are_Equal_In_Ada
-     (Node1, Node2 : Ada_Node'Class) return Boolean;
-   --  Return whether two AST nodes are equal in Ada.
-   --  Of course, white spaces and comments are ignored.
-   --
-   --  Semantic equality is supported for identifiers: Ada is case insensitive
-   --  Of course, string and character literal are compared case sensitive.
-   --  Semantic equality is supported for integers,
-   --  e.g. 1000, 1_000, 1E3, and 1e+3 are all equal.
-   --  TODO: add semantic equality for float
-   --        waiting for https://gt3-prod-1.adacore.com/#/tickets/U922-027
-   --  TODO: add semantic equality for dotted names and renames.
-   --        e.g. the same function f is referred by X.f; and use X; f;
-
    function In_Same_Package (Unit1, Unit2 : Analysis_Unit) return Boolean;
    --  Two analysis units are in the same package X
    --  when their files names (excluding the extension) are the same.

@@ -218,17 +218,22 @@ package body Rejuvenation.Match_Patterns is
          raise Invalid_Multiple_Placeholder_Status_Exception;
       end if;
       if MPS.Has_Earlier_Multiple_Placeholder_Nodes then
-         if MPS.Earlier_Multiple_Placeholder_Nodes.Length <=
-           MPS.Multiple_Placeholder_Nodes.Length
-           or else not Are_Equal_In_Ada
-             (MPS.Earlier_Multiple_Placeholder_Nodes.Element
-                (Integer (MPS.Multiple_Placeholder_Nodes.Length + 1)),
-              Instance_Node)
-         then
-            raise Inconsistent_Placeholder_Values_Exception
-              with Get_Placeholder_Name (MPS.Multiple_PlaceHolder_Name) &
-              " at " & Instance_Node.Image;
-         end if;
+         declare
+            MP : Match_Pattern;
+         begin
+            if MPS.Earlier_Multiple_Placeholder_Nodes.Length <=
+              MPS.Multiple_Placeholder_Nodes.Length
+              or else not Match_Full
+                (MP,
+                 MPS.Earlier_Multiple_Placeholder_Nodes.Element
+                   (Integer (MPS.Multiple_Placeholder_Nodes.Length + 1)),
+                 Instance_Node)
+            then
+               raise Inconsistent_Placeholder_Values_Exception
+                 with Get_Placeholder_Name (MPS.Multiple_PlaceHolder_Name) &
+                 " at " & Instance_Node.Image;
+            end if;
+         end;
       end if;
       MPS.Multiple_Placeholder_Nodes.Append (Instance_Node);
    end Update;
@@ -459,12 +464,13 @@ package body Rejuvenation.Match_Patterns is
          declare
             Earlier_Mapping : constant Node_List.Vector :=
               MP.Get_Multiple_As_Nodes (Placeholder_Name);
+            InnerMP : Match_Pattern;
          begin
             if Earlier_Mapping.Length /= Instance_Vector.Length
               or else
               (for some I in 1 .. Natural (Instance_Vector.Length) =>
-                 not Are_Equal_In_Ada
-                   (Earlier_Mapping.Element (I), Instance_Vector.Element (I)))
+                 not Match_Full (InnerMP,
+                     Earlier_Mapping.Element (I), Instance_Vector.Element (I)))
             then
                raise Inconsistent_Placeholder_Values_Exception;
             end if;
@@ -479,14 +485,32 @@ package body Rejuvenation.Match_Patterns is
      (MP       : in out Match_Pattern; Pattern : Ada_Node'Class;
       Instance :        Ada_Node'Class) return Boolean
    is
+      function Disambiguate_Node (Node : Ada_Node) return Ada_Node;
+      --  The same Ada code can be interpreted as different Nodes
+      --  e.g. an defining name and an indentifier
+      --  for pattern matching (to match definitions to references)
+      --  we select a unique [shallow] representation
+      function Disambiguate_Node (Node : Ada_Node) return Ada_Node
+      is
+      begin
+         if Node.Is_Null or else Node.Kind not in Ada_Defining_Name then
+            return Node;
+         else
+            return Node.First_Child;
+         end if;
+      end Disambiguate_Node;
+
       Placeholder_Name : constant String := Get_Placeholder_Name (Pattern);
    begin
       if MP.Has_Single (Placeholder_Name) then
          declare
             Earlier_Mapping : constant Ada_Node :=
               MP.Get_Single_As_Node (Placeholder_Name);
+            InnerMP : Match_Pattern;
          begin
-            if not Are_Equal_In_Ada (Earlier_Mapping, Instance.As_Ada_Node)
+            if not Match_Full (InnerMP,
+                               Disambiguate_Node (Earlier_Mapping),
+                               Disambiguate_Node (Instance.As_Ada_Node))
             then
                raise Inconsistent_Placeholder_Values_Exception;
             end if;
