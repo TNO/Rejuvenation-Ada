@@ -294,7 +294,7 @@ package body Test_Examples is
       declare
          Unit : constant Analysis_Unit :=
            Analyze_File_In_Project
-             ("../src/ParentPackage-ChildPackage.adb",
+             ("../src/parentpackage-childpackage.adb",
               "../workshop.gpr");
          CU : constant Compilation_Unit := Unit.Root.As_Compilation_Unit;
       begin
@@ -324,15 +324,15 @@ package body Test_Examples is
             Put_Line ("   " & Image (UD.P_Decl.P_Defining_Name.Text));
          end loop;
          Assert
-           (Condition => CU.P_Unit_Dependencies'Length = 16,
+           (Condition => CU.P_Unit_Dependencies'Length = 17,
             Message   =>
-              "Length of Unit Dependencies is unexpectedly not 16 but " &
+              "Length of Unit Dependencies is unexpectedly not 17 but " &
               CU.P_Unit_Dependencies'Length'Image);
       end;
       declare
          Unit : constant Analysis_Unit :=
            Analyze_File_In_Project
-             ("../src/ParentPackage-ChildPackage.ads",
+             ("../src/parentpackage-childpackage.ads",
               "../workshop.gpr");
          CU : constant Compilation_Unit := Unit.Root.As_Compilation_Unit;
       begin
@@ -362,9 +362,9 @@ package body Test_Examples is
             Put_Line ("   " & Image (UD.P_Decl.P_Defining_Name.Text));
          end loop;
          Assert
-           (Condition => CU.P_Unit_Dependencies'Length = 14,
+           (Condition => CU.P_Unit_Dependencies'Length = 15,
             Message   =>
-              "Length of Unit Dependencies is unexpectedly not 14 but " &
+              "Length of Unit Dependencies is unexpectedly not 15 but " &
               CU.P_Unit_Dependencies'Length'Image);
       end;
    end Test_Units;
