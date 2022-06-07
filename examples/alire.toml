@@ -1,6 +1,6 @@
 name = "examples"
 description = "Examples to use the rejuvenation library"
-version = "0.0.0"
+version = "22.0.0"
 
 authors = ["Pierre van de Laar"]
 maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
@@ -10,7 +10,7 @@ executables = ["examples_main"]
 
 [[depends-on]]
 libadalang = "^22.0.0"
-rejuvenation = "*"
+rejuvenation = "^22.0.0"
 
 [[pins]]
 rejuvenation = { path = ".." } 

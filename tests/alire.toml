@@ -1,6 +1,6 @@
 name = "tests"
 description = "tests for rejuvenation"
-version = "0.0.0"
+version = "22.0.0"
 
 authors = ["Pierre van de Laar"]
 maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
@@ -11,7 +11,7 @@ executables = ["tests"]
 [[depends-on]]
 aunit = "^22.0.0"
 libadalang = "^22.0.0"
-rejuvenation = "*"
+rejuvenation = "^22.0.0"
 
 [[pins]]
 rejuvenation = { path = ".." } 
