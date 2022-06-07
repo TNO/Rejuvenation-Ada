@@ -1,6 +1,5 @@
 with Ada.Containers;                 use Ada.Containers;
 with Ada.Strings.Fixed;              use Ada.Strings.Fixed;
-with Ada.Strings.Unbounded;          use Ada.Strings.Unbounded;
 with AUnit.Assertions;               use AUnit.Assertions;
 with Langkit_Support.Text;           use Langkit_Support.Text;
 with Libadalang.Analysis;            use Libadalang.Analysis;
