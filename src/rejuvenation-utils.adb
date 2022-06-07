@@ -1,7 +1,6 @@
 with Ada.Strings;           use Ada.Strings;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Strings.Equal_Case_Insensitive;
-with GNATCOLL.GMP.Integers; use GNATCOLL.GMP.Integers;
 with Langkit_Support.Text;  use Langkit_Support.Text;
 
 package body Rejuvenation.Utils is
