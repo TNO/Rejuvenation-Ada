@@ -194,7 +194,7 @@ package body Test_Exercises_Navigate is
       end Process_Node;
 
       Filename         : constant String := "src/" & GNAT.Source_Info.File;
-      Project_Filename : constant String        := "tests.gpr";
+      Project_Filename : constant String        := "tests_workshop.gpr";
       Unit             : constant Analysis_Unit :=
         Analyze_File_In_Project (Filename, Project_Filename);
    begin
