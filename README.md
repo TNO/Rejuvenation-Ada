@@ -29,9 +29,8 @@ We want to improve this behaviour soon. See https://github.com/TNO/Renaissance-A
 A find pattern might contain multiple different placeholders.
 
 A find pattern might contain the same placeholder multiple times.
-This add a constraint to the find process:
-A match will only be found when all occurrence of the same placeholder are identical.
-Note that universities are still researching what the best definition of identical is.
+This adds a constraint to the find process:
+A match will only be found when all occurrences of the same placeholder are identical.
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
 the term backreference is used to denote a placeholder that reoccurs.
 
