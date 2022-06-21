@@ -217,46 +217,59 @@ package body Test_Exercises_Navigate is
       begin
          if Node.Kind = Ada_If_Stmt then
             declare
-               ifStmt : constant If_Stmt := Node.As_If_Stmt;
+               IfStmt : constant If_Stmt := Node.As_If_Stmt;
             begin
-               if not ifStmt.F_Then_Stmts.Is_Null
-                 and then not ifStmt.F_Else_Stmts.Is_Null
-                 and then ifStmt.F_Alternatives.Children_Count = 0
-                 and then ifStmt.F_Then_Stmts.Children_Count = 1
-                 and then ifStmt.F_Else_Stmts.Children_Count = 1
+               if not IfStmt.F_Then_Stmts.Is_Null
+                 and then not IfStmt.F_Else_Stmts.Is_Null
+                 and then IfStmt.F_Alternatives.Children_Count = 0
+                 and then IfStmt.F_Then_Stmts.Children_Count = 1
+                 and then IfStmt.F_Else_Stmts.Children_Count = 1
                then
                   declare
                      ThenNode : constant Ada_Node :=
-                       ifStmt.F_Then_Stmts.Child
-                         (ifStmt.F_Then_Stmts.First_Child_Index);
+                       IfStmt.F_Then_Stmts.Child
+                         (IfStmt.F_Then_Stmts.First_Child_Index);
                      ElseNode : constant Ada_Node :=
-                       ifStmt.F_Else_Stmts.Child
-                         (ifStmt.F_Else_Stmts.First_Child_Index);
+                       IfStmt.F_Else_Stmts.Child
+                         (IfStmt.F_Else_Stmts.First_Child_Index);
                   begin
                      if ThenNode.Kind = Ada_Assign_Stmt
                        and then ElseNode.Kind = Ada_Assign_Stmt
-                       and then ThenNode.As_Assign_Stmt.F_Dest.Text =
-                         ElseNode.As_Assign_Stmt.F_Dest.Text
-                       and then ThenNode.As_Assign_Stmt.F_Expr.Kind =
-                         Ada_Identifier
-                       and then Ada.Strings.Equal_Case_Insensitive
-                         (Image
-                            (ThenNode.As_Assign_Stmt.F_Expr.As_Identifier
-                               .Text),
-                          "True")
-                       and then ElseNode.As_Assign_Stmt.F_Expr.Kind =
-                         Ada_Identifier
-                       and then Ada.Strings.Equal_Case_Insensitive
-                         (Image
-                            (ElseNode.As_Assign_Stmt.F_Expr.As_Identifier
-                               .Text),
-                          "False")
                      then
-                        Found_Matches := Found_Matches + 1;
-                        Put_Line
-                          (Image (ifStmt.Full_Sloc_Image) &
-                           Image (ThenNode.As_Assign_Stmt.F_Dest.Text) &
-                           " := " & Image (ifStmt.F_Cond_Expr.Text) & ";");
+                        declare
+                           ThenAssignStmt : constant Assign_Stmt :=
+                             ThenNode.As_Assign_Stmt;
+                           ElseAssignStmt : constant Assign_Stmt :=
+                             ElseNode.As_Assign_Stmt;
+                        begin
+                           if ThenAssignStmt.F_Dest.Text =
+                             ElseAssignStmt.F_Dest.Text
+                             and then ThenAssignStmt.F_Expr.Kind =
+                               Ada_Identifier
+                             and then ElseAssignStmt.F_Expr.Kind =
+                                 Ada_Identifier
+                           then
+                              declare
+                                 ThenIdentifier : constant Identifier :=
+                                   ThenAssignStmt.F_Expr.As_Identifier;
+                                 ElseIdentifier : constant Identifier :=
+                                   ElseAssignStmt.F_Expr.As_Identifier;
+                              begin
+                                 if Ada.Strings.Equal_Case_Insensitive
+                                   (Image (ThenIdentifier.Text), "True")
+                                   and then Ada.Strings.Equal_Case_Insensitive
+                                     (Image (ElseIdentifier.Text), "False")
+                                 then
+                                    Found_Matches := Found_Matches + 1;
+                                    Put_Line
+                                      (Image (IfStmt.Full_Sloc_Image) &
+                                         Image (ThenAssignStmt.F_Dest.Text) &
+                                         " := " &
+                                         Image (IfStmt.F_Cond_Expr.Text) & ";");
+                                 end if;
+                              end;
+                           end if;
+                        end;
                      end if;
                   end;
                end if;
