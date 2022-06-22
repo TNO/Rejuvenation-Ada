@@ -4,7 +4,7 @@ with Ada.Strings.Equal_Case_Insensitive;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Text_IO;           use Ada.Text_IO;
 with GNAT
-  . --  with comment
+    . --  with comment
 Source_Info; use GNAT
     .  --  and even more comment
 Source_Info;
@@ -212,6 +212,41 @@ package body Test_Exercises_Navigate is
 
       Found_Matches : Natural := 0;
 
+      function Is_Match_Identifiers
+        (ThenIdentifier, ElseIdentifier : Identifier) return Boolean;
+      function Is_Match_Identifiers
+        (ThenIdentifier, ElseIdentifier : Identifier) return Boolean is
+        (Ada.Strings.Equal_Case_Insensitive
+           (Image (ThenIdentifier.Text), "True")
+         and then Ada.Strings.Equal_Case_Insensitive
+           (Image (ElseIdentifier.Text), "False"));
+
+      function Is_Match_Assign_Stmts
+        (ThenAssignStmt, ElseAssignStmt : Assign_Stmt) return Boolean;
+      function Is_Match_Assign_Stmts
+        (ThenAssignStmt, ElseAssignStmt : Assign_Stmt) return Boolean is
+        (ThenAssignStmt.F_Dest.Text = ElseAssignStmt.F_Dest.Text
+         and then ThenAssignStmt.F_Expr.Kind = Ada_Identifier
+         and then ElseAssignStmt.F_Expr.Kind = Ada_Identifier
+         and then Is_Match_Identifiers
+           (ThenAssignStmt.F_Expr.As_Identifier,
+            ElseAssignStmt.F_Expr.As_Identifier));
+
+      function Is_Match_Nodes (ThenNode, ElseNode : Ada_Node) return Boolean;
+      function Is_Match_Nodes (ThenNode, ElseNode : Ada_Node) return Boolean is
+        (ThenNode.Kind = Ada_Assign_Stmt
+         and then ElseNode.Kind = Ada_Assign_Stmt
+         and then Is_Match_Assign_Stmts
+           (ThenNode.As_Assign_Stmt, ElseNode.As_Assign_Stmt));
+
+      function Is_Match (IfStmt : If_Stmt) return Boolean;
+      function Is_Match (IfStmt : If_Stmt) return Boolean is
+        (IfStmt.F_Then_Stmts.Children_Count = 1
+         and then IfStmt.F_Else_Stmts.Children_Count = 1
+         and then IfStmt.F_Alternatives.Children_Count = 0
+         and then Is_Match_Nodes
+           (IfStmt.F_Then_Stmts.First_Child, IfStmt.F_Else_Stmts.First_Child));
+
       function Process_Node (Node : Ada_Node'Class) return Visit_Status;
       function Process_Node (Node : Ada_Node'Class) return Visit_Status is
       begin
@@ -219,59 +254,14 @@ package body Test_Exercises_Navigate is
             declare
                IfStmt : constant If_Stmt := Node.As_If_Stmt;
             begin
-               if not IfStmt.F_Then_Stmts.Is_Null
-                 and then not IfStmt.F_Else_Stmts.Is_Null
-                 and then IfStmt.F_Alternatives.Children_Count = 0
-                 and then IfStmt.F_Then_Stmts.Children_Count = 1
-                 and then IfStmt.F_Else_Stmts.Children_Count = 1
-               then
-                  declare
-                     ThenNode : constant Ada_Node :=
-                       IfStmt.F_Then_Stmts.Child
-                         (IfStmt.F_Then_Stmts.First_Child_Index);
-                     ElseNode : constant Ada_Node :=
-                       IfStmt.F_Else_Stmts.Child
-                         (IfStmt.F_Else_Stmts.First_Child_Index);
-                  begin
-                     if ThenNode.Kind = Ada_Assign_Stmt
-                       and then ElseNode.Kind = Ada_Assign_Stmt
-                     then
-                        declare
-                           ThenAssignStmt : constant Assign_Stmt :=
-                             ThenNode.As_Assign_Stmt;
-                           ElseAssignStmt : constant Assign_Stmt :=
-                             ElseNode.As_Assign_Stmt;
-                        begin
-                           if ThenAssignStmt.F_Dest.Text =
-                             ElseAssignStmt.F_Dest.Text
-                             and then ThenAssignStmt.F_Expr.Kind =
-                               Ada_Identifier
-                             and then ElseAssignStmt.F_Expr.Kind =
-                                 Ada_Identifier
-                           then
-                              declare
-                                 ThenIdentifier : constant Identifier :=
-                                   ThenAssignStmt.F_Expr.As_Identifier;
-                                 ElseIdentifier : constant Identifier :=
-                                   ElseAssignStmt.F_Expr.As_Identifier;
-                              begin
-                                 if Ada.Strings.Equal_Case_Insensitive
-                                   (Image (ThenIdentifier.Text), "True")
-                                   and then Ada.Strings.Equal_Case_Insensitive
-                                     (Image (ElseIdentifier.Text), "False")
-                                 then
-                                    Found_Matches := Found_Matches + 1;
-                                    Put_Line
-                                      (Image (IfStmt.Full_Sloc_Image) &
-                                         Image (ThenAssignStmt.F_Dest.Text) &
-                                         " := " &
-                                         Image (IfStmt.F_Cond_Expr.Text) & ";");
-                                 end if;
-                              end;
-                           end if;
-                        end;
-                     end if;
-                  end;
+               if Is_Match (IfStmt) then
+                  Found_Matches := Found_Matches + 1;
+                  Put_Line
+                    (Image (IfStmt.Full_Sloc_Image) &
+                     Image
+                       (IfStmt.F_Then_Stmts.First_Child.As_Assign_Stmt.F_Dest
+                          .Text) &
+                     " := " & Image (IfStmt.F_Cond_Expr.Text) & ";");
                end if;
             end;
          end if;
