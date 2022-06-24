@@ -8,12 +8,12 @@ with Test_Exercises_Rewrite;  use Test_Exercises_Rewrite;
 package body Workshop_Suite is
 
    function Suite return Access_Test_Suite is
-      Ret : constant Access_Test_Suite := new Test_Suite;
-      WTC : constant Test_Case_Access := new Example_Test_Case;
-      EITC : constant Test_Case_Access := new Exercise_Intro_Test_Case;
-      ENTC : constant Test_Case_Access := new Exercise_Navigate_Test_Case;
-      EMTC : constant Test_Case_Access := new Exercise_Match_Test_Case;
-      ERTC : constant Test_Case_Access := new Exercise_Rewrite_Test_Case;
+      Ret  : constant Access_Test_Suite := new Test_Suite;
+      WTC  : constant Test_Case_Access  := new Example_Test_Case;
+      EITC : constant Test_Case_Access  := new Exercise_Intro_Test_Case;
+      ENTC : constant Test_Case_Access  := new Exercise_Navigate_Test_Case;
+      EMTC : constant Test_Case_Access  := new Exercise_Match_Test_Case;
+      ERTC : constant Test_Case_Access  := new Exercise_Rewrite_Test_Case;
    begin
       Ret.Add_Test (WTC);
       Ret.Add_Test (EITC);

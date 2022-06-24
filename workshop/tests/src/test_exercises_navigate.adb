@@ -4,7 +4,7 @@ with Ada.Strings.Equal_Case_Insensitive;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Text_IO;           use Ada.Text_IO;
 with GNAT
-    . --  with comment
+  . --  with comment
 Source_Info; use GNAT
     .  --  and even more comment
 Source_Info;

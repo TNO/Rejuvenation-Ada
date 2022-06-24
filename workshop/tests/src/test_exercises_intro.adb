@@ -69,7 +69,7 @@ package body Test_Exercises_Intro is
          return Into;
       end Process_Node;
 
-      Project_Filename : constant String                := "tests_workshop.gpr";
+      Project_Filename : constant String := "tests_workshop.gpr";
       Units            : constant Analysis_Units.Vector :=
         Analyze_Project (Project_Filename);
    begin

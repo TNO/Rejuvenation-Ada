@@ -294,8 +294,7 @@ package body Test_Examples is
       declare
          Unit : constant Analysis_Unit :=
            Analyze_File_In_Project
-             ("../src/parentpackage-childpackage.adb",
-              "../workshop.gpr");
+             ("../src/parentpackage-childpackage.adb", "../workshop.gpr");
          CU : constant Compilation_Unit := Unit.Root.As_Compilation_Unit;
       begin
          Assert
@@ -332,8 +331,7 @@ package body Test_Examples is
       declare
          Unit : constant Analysis_Unit :=
            Analyze_File_In_Project
-             ("../src/parentpackage-childpackage.ads",
-              "../workshop.gpr");
+             ("../src/parentpackage-childpackage.ads", "../workshop.gpr");
          CU : constant Compilation_Unit := Unit.Root.As_Compilation_Unit;
       begin
          Assert
