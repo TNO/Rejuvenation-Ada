@@ -442,8 +442,8 @@ package body Test_Text_Rewrites is
                   begin
                      Assert
                        (Index_Append + Append'Length <= Index_Prepend,
-                        "Append of node should be before "
-                        & "prepend of next sibling");
+                        "Append of node should be before " &
+                        "prepend of next sibling");
                   end;
                end;
             end if;
@@ -489,8 +489,8 @@ package body Test_Text_Rewrites is
             begin
                Assert
                  (Result_Twice, Result_Once,
-                  "Replace should be idempotent, "
-                  & "yet actual and expected differ.");
+                  "Replace should be idempotent, " &
+                  "yet actual and expected differ.");
             end;
          end;
       end Test_Replace_Idempotent;
@@ -548,8 +548,7 @@ package body Test_Text_Rewrites is
       end loop;
    end Test_Node_Location_Before;
 
-   procedure Test_Node_Location_Before_No_Newline
-     (T : in out Test_Case'Class);
+   procedure Test_Node_Location_Before_No_Newline (T : in out Test_Case'Class);
    procedure Test_Node_Location_Before_No_Newline (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);

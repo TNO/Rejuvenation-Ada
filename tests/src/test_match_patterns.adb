@@ -282,8 +282,7 @@ package body Test_Match_Patterns is
         (If_Stmt_Rule, Pattern,
          "if x then P; -- comment" & ASCII.LF & " Q; else P; Q; end if;");
       Assert_Match_Full
-        (If_Stmt_Rule,
-         Pattern,
+        (If_Stmt_Rule, Pattern,
          "if x then f(x, y); else f ( x ,  y) ; end if;");
       Assert_Mismatch_Full
         (If_Stmt_Rule, Pattern, "if x then P; Q; else P; X; end if;");
@@ -319,34 +318,23 @@ package body Test_Match_Patterns is
       Pattern : constant String := "$S_Val = $S_Val";
    begin
       --  Bool
-      Assert_Match_Full
-        (Expr_Rule, Pattern, "True = True");
-      Assert_Match_Full
-        (Expr_Rule, Pattern, "True = true");
-      Assert_Match_Full
-        (Expr_Rule, Pattern, "True = TRUE");
+      Assert_Match_Full (Expr_Rule, Pattern, "True = True");
+      Assert_Match_Full (Expr_Rule, Pattern, "True = true");
+      Assert_Match_Full (Expr_Rule, Pattern, "True = TRUE");
 
       --  Char
-      Assert_Match_Full
-        (Expr_Rule, Pattern, "'t' = 't'");
-      Assert_Mismatch_Full
-        (Expr_Rule, Pattern, "'t' = 'T'");
+      Assert_Match_Full (Expr_Rule, Pattern, "'t' = 't'");
+      Assert_Mismatch_Full (Expr_Rule, Pattern, "'t' = 'T'");
 
       --  String
-      Assert_Match_Full
-        (Expr_Rule, Pattern, """True"" = ""True""");
-      Assert_Mismatch_Full
-        (Expr_Rule, Pattern, """True"" = ""true""");
-      Assert_Mismatch_Full
-        (Expr_Rule, Pattern, """True"" = ""TRUE""");
+      Assert_Match_Full (Expr_Rule, Pattern, """True"" = ""True""");
+      Assert_Mismatch_Full (Expr_Rule, Pattern, """True"" = ""true""");
+      Assert_Mismatch_Full (Expr_Rule, Pattern, """True"" = ""TRUE""");
 
       --  Integer
-      Assert_Match_Full
-        (Expr_Rule, Pattern, "1000 = 1000");
-      Assert_Match_Full
-        (Expr_Rule, Pattern, "1000 = 1_000");
-      Assert_Match_Full
-        (Expr_Rule, Pattern, "1000 = 1E3");
+      Assert_Match_Full (Expr_Rule, Pattern, "1000 = 1000");
+      Assert_Match_Full (Expr_Rule, Pattern, "1000 = 1_000");
+      Assert_Match_Full (Expr_Rule, Pattern, "1000 = 1E3");
    end Test_Placeholder_Equivalence;
 
    procedure Test_Call_Mismatch_No_Arguments (T : in out Test_Case'Class);
@@ -550,8 +538,7 @@ package body Test_Match_Patterns is
      (Make_Object_Declaration_Subtype_Indication
         (Defining_Identifier_List => "u" & Ids));
 
-   procedure Test_Object_Decl_Defining_Names_Tail
-     (T : in out Test_Case'Class);
+   procedure Test_Object_Decl_Defining_Names_Tail (T : in out Test_Case'Class);
    procedure Test_Object_Decl_Defining_Names_Tail (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
@@ -578,8 +565,7 @@ package body Test_Match_Patterns is
      (Make_Object_Declaration_Subtype_Indication
         (Defining_Identifier_List => Ids & "u"));
 
-   procedure Test_Object_Decl_Defining_Names_Lead
-     (T : in out Test_Case'Class);
+   procedure Test_Object_Decl_Defining_Names_Lead (T : in out Test_Case'Class);
    procedure Test_Object_Decl_Defining_Names_Lead (T : in out Test_Case'Class)
    is
       pragma Unreferenced (T);
@@ -799,8 +785,8 @@ package body Test_Match_Patterns is
         Make_Object_Declaration_Subtype_Indication
           (Subtype_Indication =>
              Make_Subtype_Indication_Index_Constraints
-               (Subtype_Mark      => Type_Key,
-                Index_Constraints => To_Vector (Ranges_Key, 1)));
+               (Subtype_Mark       => Type_Key,
+                 Index_Constraints => To_Vector (Ranges_Key, 1)));
       Pattern : constant Analysis_Unit :=
         Analyze_Fragment (Pattern_Str, Object_Decl_Rule);
 

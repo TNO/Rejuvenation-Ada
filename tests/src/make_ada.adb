@@ -1,9 +1,7 @@
 package body Make_Ada is
 
    function Make_Call
-     (Name                  : String;
-      Actual_Parameter_Part : Vector)
-      return String
+     (Name : String; Actual_Parameter_Part : Vector) return String
    is
       Actual_Parameter_Part_String : constant String :=
         (if Actual_Parameter_Part.Is_Empty then ""
@@ -12,9 +10,8 @@ package body Make_Ada is
       return Name & Actual_Parameter_Part_String;
    end Make_Call;
 
-   function Make_Parameter_Association (Name : String := "";
-                                        Value : String := "1")
-                                        return String
+   function Make_Parameter_Association
+     (Name : String := ""; Value : String := "1") return String
    is
    begin
       if Name = "" then

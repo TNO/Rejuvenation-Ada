@@ -1,6 +1,6 @@
-with Libadalang.Analysis;                use Libadalang.Analysis;
-with Libadalang.Common;                  use Libadalang.Common;
-with String_Vectors;                     use String_Vectors;
+with Libadalang.Analysis; use Libadalang.Analysis;
+with Libadalang.Common;   use Libadalang.Common;
+with String_Vectors;      use String_Vectors;
 private with Ada.Strings.Unbounded;
 
 package Generators is
@@ -18,39 +18,32 @@ package Generators is
 
    function Get_Values (G : Generator) return String_Vectors.Vector;
 
-   type String_Generator is
-   not null access function (Strings : String_Vectors.Vector) return String;
+   type String_Generator is not null access function
+     (Strings : String_Vectors.Vector) return String;
 
-   function Make_Generator (Name : String;
-                            Values : String_Vectors.Vector;
-                            Rule : Grammar_Rule;
-                            SG : String_Generator
-                           ) return Generator;
+   function Make_Generator
+     (Name : String; Values : String_Vectors.Vector; Rule : Grammar_Rule;
+      SG   : String_Generator) return Generator;
 
 private
    use Ada.Strings.Unbounded;
 
    type Generator is record
-      Name : Unbounded_String;
+      Name   : Unbounded_String;
       Values : String_Vectors.Vector;
       --  TODO: is a copy needed to make it immutable from the outside?
       Rule : Grammar_Rule;
-      SG : String_Generator;
+      SG   : String_Generator;
    end record;
 
    function Make_Generator
      (Name : String; Values : String_Vectors.Vector; Rule : Grammar_Rule;
-      SG : String_Generator)
-      return Generator
-   is
+      SG   : String_Generator) return Generator is
      ((To_Unbounded_String (Name), Values, Rule, SG));
 
-   function Get_Name (G : Generator) return String
-   is
-     (To_String (G.Name));
+   function Get_Name (G : Generator) return String is (To_String (G.Name));
 
-   function Get_Values (G : Generator) return String_Vectors.Vector
-   is
+   function Get_Values (G : Generator) return String_Vectors.Vector is
      (G.Values);
 
 end Generators;

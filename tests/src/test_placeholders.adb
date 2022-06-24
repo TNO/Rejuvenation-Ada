@@ -40,8 +40,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: "
-         & "Name is unexpectedly not a placeholder name");
+           "Precondition violated: " &
+           "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Object_Decl,
          Message => "Unexpected kind of 'Unit.Root'");
@@ -75,8 +75,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: "
-         & "Name is unexpectedly not a placeholder name");
+           "Precondition violated: " &
+           "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Call_Stmt,
          Message => "Unexpected kind of 'Unit.Root'");
@@ -104,8 +104,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: "
-         & "Name is unexpectedly not a placeholder name");
+           "Precondition violated: " &
+           "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Call_Stmt,
          Message => "Unexpected kind of 'Unit.Root'");
@@ -143,8 +143,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: "
-         & "Name is unexpectedly not a placeholder name");
+           "Precondition violated: " &
+           "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Enum_Type_Def,
          Message => "Unexpected kind of 'Unit.Root'");
@@ -181,8 +181,8 @@ package body Test_Placeholders is
       Assert
         (Condition => Is_Placeholder_Name (Placeholder_Name),
          Message   =>
-           "Precondition violated: "
-         & "Name is unexpectedly not a placeholder name");
+           "Precondition violated: " &
+           "Name is unexpectedly not a placeholder name");
       Assert
         (Actual  => Unit.Root.Kind, Expected => Ada_Call_Expr,
          Message => "Unexpected kind of 'Unit.Root'");

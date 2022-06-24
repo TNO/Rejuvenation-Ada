@@ -177,34 +177,34 @@ package body Test_Match_Patterns_Placeholders is
 
       Find_Pattern : constant Pattern :=
         Make_Pattern
-          ("if $S_Cond " & "then $S_Stmt; $M_Stmts_True; "
-           & "else $S_Stmt; $M_Stmts_False;" &
-           "end if;",
+          ("if $S_Cond " & "then $S_Stmt; $M_Stmts_True; " &
+           "else $S_Stmt; $M_Stmts_False;" & "end if;",
            If_Stmt_Rule);
       Input : constant Analysis_Unit :=
-        Analyze_Fragment ("if c " & "then Put (X); Put(1); Put(2); "
-                          & "else Put (X); Put(3); Put(4); end if;",
-                          If_Stmt_Rule);
+        Analyze_Fragment
+          ("if c " & "then Put (X); Put(1); Put(2); " &
+           "else Put (X); Put(3); Put(4); end if;",
+           If_Stmt_Rule);
 
       Replace_Pattern : constant Pattern :=
         Make_Pattern
-          ("$S_Stmt; " & "if $S_Cond " & "then $M_Stmts_True; "
-           & "else $M_Stmts_False;" &
-           "end if;",
+          ("$S_Stmt; " & "if $S_Cond " & "then $M_Stmts_True; " &
+           "else $M_Stmts_False;" & "end if;",
            Stmts_Rule);
 
-      Expected : constant String := "Put (X); " &
-        "if c " & "then Put(1); Put(2); "
-        & "else Put(3); Put(4); end if;";
+      Expected : constant String :=
+        "Put (X); " & "if c " & "then Put(1); Put(2); " &
+        "else Put(3); Put(4); end if;";
 
       TR : Text_Rewrite'Class := Make_Text_Rewrite_Unit (Input);
    begin
       Find_And_Replace (TR, Input.Root, Find_Pattern, Replace_Pattern);
       declare
-         Actual : constant String        := TR.ApplyToString;
+         Actual : constant String := TR.ApplyToString;
       begin
-         Assert_Equal_AST (Expected, Actual, Stmts_Rule,
-                           "Find and Replaced unexpectedly failed");
+         Assert_Equal_AST
+           (Expected, Actual, Stmts_Rule,
+            "Find and Replaced unexpectedly failed");
       end;
    end Test_Match_Single_Multiple;
 
