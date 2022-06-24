@@ -69,8 +69,7 @@ package body Rejuvenation.Factory is
    begin
       if Recursive then
          return
-           Info.Language = "ada"
-           and then Info.Project /= No_Project
+           Info.Language = "ada" and then Info.Project /= No_Project
            and then not Info.Project.Externally_Built;
       else
          return

@@ -6,11 +6,9 @@ package body Rejuvenation.Environment_Variables is
 
       procedure Set_Position (Position : Cursor);
       --  Set individual key value pair at position
-      procedure Set_Position (Position : Cursor)
-      is
+      procedure Set_Position (Position : Cursor) is
       begin
-         Set (Name => Key (Position),
-              Value => Element (Position));
+         Set (Name => Key (Position), Value => Element (Position));
       end Set_Position;
 
    begin

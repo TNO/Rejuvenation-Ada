@@ -68,8 +68,9 @@ is
       Replace_Prefix'Result
         (Replace_Prefix'Result'First ..
              Replace_Prefix'Result'First + (New_Prefix'Length - 1)) =
-      New_Prefix and then
-      Replace_Prefix'Result
+      New_Prefix
+      and then
+        Replace_Prefix'Result
           (Replace_Prefix'Result'First + New_Prefix'Length ..
                Replace_Prefix'Result'Last) =
         String_With_Prefix
@@ -88,15 +89,15 @@ is
       Test_Case => ("Empty Prefix and Remainder", Nominal),
       Test_Case => ("Empty New Prefix and Remainder", Nominal),
       Test_Case => ("All Empty", Nominal),
-      Test_Case => ("String not start with Prefix, "
-                    & "Strlen larger than Prefix length",
-                    Robustness),
-      Test_Case => ("String not start with Prefix, "
-                    & "Strlen equal to Prefix length",
-                    Robustness),
-      Test_Case => ("String not start with Prefix, "
-                    & "Strlen smaller than Prefix length",
-                    Robustness);
+      Test_Case =>
+      ("String not start with Prefix, " & "Strlen larger than Prefix length",
+       Robustness),
+      Test_Case =>
+      ("String not start with Prefix, " & "Strlen equal to Prefix length",
+       Robustness),
+      Test_Case =>
+      ("String not start with Prefix, " & "Strlen smaller than Prefix length",
+       Robustness);
       --  Replace 'Prefix' with 'New_Prefix' in 'String_With_Prefix'.
       --  @param String_With_Prefix String that starts with Prefix
       --  @param Prefix Prefix present in String_With_Prefix to be replaced

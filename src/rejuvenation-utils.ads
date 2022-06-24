@@ -5,10 +5,8 @@ package Rejuvenation.Utils is
    -- Raw signature --------
 
    function Raw_Signature
-     (Node   : Ada_Node'Class;
-      Before : Node_Location := No_Trivia;
-      After  : Node_Location := No_Trivia)
-      return String;
+     (Node  : Ada_Node'Class; Before : Node_Location := No_Trivia;
+      After : Node_Location := No_Trivia) return String;
    --  Return the original text for the node, using the charset of the
    --  corresponding analysis unit.
    function Raw_Signature
@@ -16,8 +14,7 @@ package Rejuvenation.Utils is
    --  Return the original text for the token, using the given charset.
    function Raw_Signature
      (First_Node, Last_Node : Ada_Node'Class;
-      Before, After : Node_Location := No_Trivia)
-      return String;
+      Before, After         : Node_Location := No_Trivia) return String;
    --  Return the original text for the first node until the last node,
    --  using the charset of the corresponding analysis unit.
 
@@ -44,16 +41,14 @@ package Rejuvenation.Utils is
 
    --  Get tokens --------
 
-   function Get_Trivia_Before
-     (Node : Ada_Node'Class) return Token_List.Vector;
+   function Get_Trivia_Before (Node : Ada_Node'Class) return Token_List.Vector;
    --  Return the trivia (whitespace, comments) tokens
    --  in front of the AST node.
    function Get_Trivia_Before
      (Token : Token_Reference) return Token_List.Vector;
    --  Return the trivia (whitespace, comments) tokens
    --  in front of the token.
-   function Get_Trivia_After
-     (Node : Ada_Node'Class) return Token_List.Vector;
+   function Get_Trivia_After (Node : Ada_Node'Class) return Token_List.Vector;
    --  Return the trivia (whitespace, comments) tokens
    --  after the AST node.
    function Get_Trivia_After

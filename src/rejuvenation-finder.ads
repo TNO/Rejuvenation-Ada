@@ -10,8 +10,7 @@ package Rejuvenation.Finder is
 
    package Match_Pattern_List is new Vectors (Positive, Match_Pattern);
 
-   type Pattern_Array is
-         array (Positive range <>) of Pattern;
+   type Pattern_Array is array (Positive range <>) of Pattern;
 
    package Pattern_Vectors is new Vectors (Positive, Pattern);
 
@@ -55,8 +54,7 @@ package Rejuvenation.Finder is
    --  in other returned nodes.
 
    function Find_First
-     (Node : Ada_Node'Class; Node_Kind : Ada_Node_Kind_Type)
-      return Ada_Node;
+     (Node : Ada_Node'Class; Node_Kind : Ada_Node_Kind_Type) return Ada_Node;
    --  Return the first recursively nested node from the AST instance
    --  that match the Node_Kind.
 
@@ -120,15 +118,13 @@ private
       return Node_List_List.Vector;
 
    function Find_MP
-     (Node : Ada_Node'Class; Pattern : Ada_Node;
-      Next : Visit_Status) return Match_Pattern_List.Vector;
+     (Node : Ada_Node'Class; Pattern : Ada_Node; Next : Visit_Status)
+      return Match_Pattern_List.Vector;
 
    type Containment is (Contained, Non_Contained);
 
    function Find_MP_Sub_List
-     (Node : Ada_Node'Class;
-      Pattern : Ada_Node_Array;
-      Next : Containment)
+     (Node : Ada_Node'Class; Pattern : Ada_Node_Array; Next : Containment)
       return Match_Pattern_List.Vector;
 
 end Rejuvenation.Finder;

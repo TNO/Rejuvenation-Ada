@@ -2,11 +2,7 @@ with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 package body String_Vectors_Utils is
 
-   function Join
-     (V         : Vector;
-      Separator : String  := "")
-   return String
-   is
+   function Join (V : Vector; Separator : String := "") return String is
    begin
       if V.Is_Empty then
          return "";

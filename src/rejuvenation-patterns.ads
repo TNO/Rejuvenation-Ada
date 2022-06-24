@@ -17,9 +17,9 @@ private
    use Ada.Strings.Unbounded;
 
    type Pattern is tagged record
-      UStr     : Unbounded_String;
-      Rule     : Grammar_Rule;
-      Unit     : Analysis_Unit;
+      UStr : Unbounded_String;
+      Rule : Grammar_Rule;
+      Unit : Analysis_Unit;
    end record;
 
    function Get_String (P : Pattern) return String is (To_String (P.UStr));

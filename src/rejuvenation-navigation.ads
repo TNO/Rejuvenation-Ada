@@ -26,13 +26,11 @@ package Rejuvenation.Navigation is
    --  (possibly the node itself), or No_Ada_Node.
 
    function Get_Ancestor_Of_Type
-     (Node : Ada_Node'Class; Node_Kind : Ada_Node_Kind_Type)
-      return Ada_Node;
+     (Node : Ada_Node'Class; Node_Kind : Ada_Node_Kind_Type) return Ada_Node;
    --  Return the first ancestor of the AST node of type Node_Kind
    --  (but not the node itself), or No_Ada_Node.
    function Get_Reflexive_Ancestor_Of_Type
-     (Node : Ada_Node'Class; Node_Kind : Ada_Node_Kind_Type)
-      return Ada_Node;
+     (Node : Ada_Node'Class; Node_Kind : Ada_Node_Kind_Type) return Ada_Node;
    --  Return the first ancestor of the AST node of type Node_Kind
    --  (possibly the node itself), or No_Ada_Node.
 

@@ -7,16 +7,14 @@ package body Rejuvenation.Printer is
    -- Private -------
    procedure Print (Str : in out Unbounded_String; Node : Ada_Node'Class);
 
-   procedure Print (Str : in out Unbounded_String; Node : Ada_Node'Class)
-   is
+   procedure Print (Str : in out Unbounded_String; Node : Ada_Node'Class) is
    begin
       if Node.Is_Null then
          Append (Str, Node.Image);
       else
          case Node.Kind is
-            when Ada_Alternatives_List
-               | Ada_Assoc_List
-               | Ada_Defining_Name_List =>
+            when Ada_Alternatives_List | Ada_Assoc_List |
+              Ada_Defining_Name_List =>
                declare
                   Children : constant Ada_Node_Array := Node.Children;
                begin
@@ -75,8 +73,7 @@ package body Rejuvenation.Printer is
 
             when Ada_Char_Literal =>
                Append (Str, "'");
-               Append
-                 (Str, Raw_Signature (Node));
+               Append (Str, Raw_Signature (Node));
                Append (Str, "'");
 
             when Ada_Delay_Stmt =>
@@ -91,8 +88,7 @@ package body Rejuvenation.Printer is
                Append (Str, ".");
                Print (Str, Node.As_Dotted_Name.F_Suffix);
 
-            when Ada_Elsif_Expr_Part_List
-               | Ada_Expr_Alternatives_List =>
+            when Ada_Elsif_Expr_Part_List | Ada_Expr_Alternatives_List =>
                declare
                   Children : constant Ada_Node_Array := Node.Children;
                begin
@@ -124,8 +120,7 @@ package body Rejuvenation.Printer is
                Print (Str, Node.As_If_Expr.F_Else_Expr);
 
             when Ada_Int_Literal =>
-               Append
-                 (Str, Raw_Signature (Node));
+               Append (Str, Raw_Signature (Node));
 
             when Ada_Membership_Expr =>
                Print (Str, Node.As_Membership_Expr.F_Expr);
@@ -230,8 +225,7 @@ package body Rejuvenation.Printer is
                Print (Str, Node.As_Qual_Expr.F_Suffix);
 
             when Ada_Real_Literal =>
-               Append
-                 (Str, Raw_Signature (Node));
+               Append (Str, Raw_Signature (Node));
 
             when Ada_Relation_Op =>
                Print (Str, Node.As_Relation_Op.F_Left);
@@ -245,8 +239,7 @@ package body Rejuvenation.Printer is
                Print (Str, Node.As_Return_Stmt.F_Return_Expr);
 
             when Ada_String_Literal =>
-               Append
-                 (Str, Raw_Signature (Node));
+               Append (Str, Raw_Signature (Node));
 
             when Ada_Un_Op =>
                Print (Str, Node.As_Un_Op.F_Op);

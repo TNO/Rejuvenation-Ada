@@ -26,12 +26,12 @@ package Rejuvenation.Node_Locations is
    --  we still miss trivia (before/after) keywords e.g.
    --  (if -- missed_after Condition -- missed_before then ...)
 
-   function Start_Offset (Node : Ada_Node'Class;
-                          Before : Node_Location := No_Trivia)
-                          return Positive;
+   function Start_Offset
+     (Node : Ada_Node'Class; Before : Node_Location := No_Trivia)
+      return Positive;
 
-   function End_Offset (Node : Ada_Node'Class;
-                        After : Node_Location := No_Trivia)
-                        return Natural;
+   function End_Offset
+     (Node : Ada_Node'Class; After : Node_Location := No_Trivia)
+      return Natural;
 
 end Rejuvenation.Node_Locations;

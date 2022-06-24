@@ -1,9 +1,8 @@
-with Ada.Strings.Unbounded;  use Ada.Strings.Unbounded;
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 package body String_Sets_Utils is
 
-   function From_Vector (V : Vector) return Set
-   is
+   function From_Vector (V : Vector) return Set is
       Return_Value : Set;
    begin
       for E of V loop
@@ -12,10 +11,9 @@ package body String_Sets_Utils is
       return Return_Value;
    end From_Vector;
 
-   function To_String (S : Set) return String
-   is
+   function To_String (S : Set) return String is
       Return_Value : Unbounded_String;
-      C : String_Sets.Cursor := S.First;
+      C            : String_Sets.Cursor := S.First;
    begin
       while C /= String_Sets.No_Element loop
          Append (Return_Value, Element (C));

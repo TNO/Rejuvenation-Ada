@@ -8,12 +8,10 @@ with String_Vectors_Utils; use String_Vectors_Utils;
 package body Rejuvenation.Replacer is
 
    function Is_Empty
-     (Node : Ada_Node'Class; Replacements : Map) return Boolean
-     with
-       Pre => not Node.Is_Null;
+     (Node : Ada_Node'Class; Replacements : Map) return Boolean with
+      Pre => not Node.Is_Null;
 
-   function Is_Empty
-     (Node : Ada_Node'Class; Replacements : Map) return Boolean
+   function Is_Empty (Node : Ada_Node'Class; Replacements : Map) return Boolean
    is
    begin
       return
@@ -312,8 +310,7 @@ package body Rejuvenation.Replacer is
    end Get_Nodes_To_Be_Replaced;
 
    function Tail (V : Node_List.Vector) return Node_List.Vector;
-   function Tail (V : Node_List.Vector) return Node_List.Vector
-   is
+   function Tail (V : Node_List.Vector) return Node_List.Vector is
       Return_Value : Node_List.Vector := V.Copy;
    begin
       Node_List.Delete_First (Return_Value);

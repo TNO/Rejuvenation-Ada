@@ -120,7 +120,7 @@ package body Rejuvenation.Match_Patterns is
             FirstToken : constant Token_Reference := First_Node.Token_Start;
             LastToken  : constant Token_Reference := Last_Node.Token_End;
             Unit       : constant Analysis_Unit   := First_Node.Unit;
-            First      : constant Integer := Raw_Data (FirstToken).Source_First;
+            First : constant Integer := Raw_Data (FirstToken).Source_First;
             Last       : constant Integer := Raw_Data (LastToken).Source_Last;
          begin
             return Encode (Unit.Text (First .. Last), Unit.Get_Charset);
@@ -469,8 +469,9 @@ package body Rejuvenation.Match_Patterns is
             if Earlier_Mapping.Length /= Instance_Vector.Length
               or else
               (for some I in 1 .. Natural (Instance_Vector.Length) =>
-                 not Match_Full (InnerMP,
-                     Earlier_Mapping.Element (I), Instance_Vector.Element (I)))
+                 not Match_Full
+                   (InnerMP, Earlier_Mapping.Element (I),
+                    Instance_Vector.Element (I)))
             then
                raise Inconsistent_Placeholder_Values_Exception;
             end if;
@@ -490,8 +491,7 @@ package body Rejuvenation.Match_Patterns is
       --  e.g. an defining name and an indentifier
       --  for pattern matching (to match definitions to references)
       --  we select a unique [shallow] representation
-      function Disambiguate_Node (Node : Ada_Node) return Ada_Node
-      is
+      function Disambiguate_Node (Node : Ada_Node) return Ada_Node is
       begin
          if Node.Is_Null or else Node.Kind not in Ada_Defining_Name then
             return Node;
@@ -508,9 +508,9 @@ package body Rejuvenation.Match_Patterns is
               MP.Get_Single_As_Node (Placeholder_Name);
             InnerMP : Match_Pattern;
          begin
-            if not Match_Full (InnerMP,
-                               Disambiguate_Node (Earlier_Mapping),
-                               Disambiguate_Node (Instance.As_Ada_Node))
+            if not Match_Full
+                (InnerMP, Disambiguate_Node (Earlier_Mapping),
+                 Disambiguate_Node (Instance.As_Ada_Node))
             then
                raise Inconsistent_Placeholder_Values_Exception;
             end if;

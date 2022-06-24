@@ -112,7 +112,7 @@ package body Rejuvenation.Node_Locations is
    end Node_End_Offset;
 
    function Line_End_Offset (Node : Ada_Node'Class) return Natural with
-     Pre => not Is_Ghost (Node);
+      Pre => not Is_Ghost (Node);
 
    function Line_End_Offset (Node : Ada_Node'Class) return Natural is
 
@@ -148,10 +148,9 @@ package body Rejuvenation.Node_Locations is
    end Line_End_Offset;
 
    function Trivia_End_Offset (Node : Ada_Node'Class) return Natural with
-     Pre => not Is_Ghost (Node);
+      Pre => not Is_Ghost (Node);
 
-   function Trivia_End_Offset (Node : Ada_Node'Class) return Natural
-   is
+   function Trivia_End_Offset (Node : Ada_Node'Class) return Natural is
       function Trivia_End_Offset
         (Token : Token_Reference; Nr : Natural) return Natural;
       function Trivia_End_Offset
