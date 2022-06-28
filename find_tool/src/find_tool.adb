@@ -13,10 +13,9 @@ procedure Find_Tool is
    Units : constant Analysis_Units.Vector :=
      Analyze_Project ("C:\path\to\your.gpr");
 
+   --  For more examples of find patterns, see
+   --  https://github.com/TNO/Rejuvenation-Ada/blob/main/find_tool/README.md
    Find_Pattern : constant Pattern :=
-   --  Make_Pattern ("for $S_Var'$S_Attribute use $S_Expr;",
-   --                Basic_Decls_Rule);
-
      Make_Pattern
        ("if $S_Cond then " &
         "  $S_f ($M_before, $M_Designator => $S_Value1, $M_after); " &
@@ -24,21 +23,6 @@ procedure Find_Tool is
         "  $S_f ($M_before, $M_Designator => $S_Value2, $M_after); " &
         "end if;",
         If_Stmt_Rule);
-
-   --  Make_Pattern
-   --    ("for $S_I in $S_Range "
-   --     & "loop if $S_Cond then $S_Var := false; end if; end loop;",
-   --     Loop_Stmt_Rule);
-
-   --  Make_Pattern
-   --    ("for $S_I in $S_Range "
-   --     & "loop if $S_Cond then $S_Var := true; end if; end loop;",
-   --     Loop_Stmt_Rule);
-
-   --  Make_Pattern
-   --    ("if $S_Cond then $M_Stmts_True; $S_Tail; "
-   --     & "else $M_Stmts_False; $S_Tail; end if;",
-   --     If_Stmt_Rule);
 
    Count : Natural := 0;
 begin
