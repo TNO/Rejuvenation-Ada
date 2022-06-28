@@ -49,3 +49,14 @@ for $S_Element of $S_Elements loop
 end loop;
 return true;
 ```
+
+### Identical tail statement
+
+Find pattern for if statement with an identical tail statement in the then- and else-branch.
+```ada
+   if $S_Cond then 
+       $M_Stmts_True; $S_Tail;
+   else 
+       $M_Stmts_False; $S_Tail;
+   end if;
+```
