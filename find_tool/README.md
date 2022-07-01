@@ -38,6 +38,13 @@ Find pattern for double negation
 not (not $S_Condition)
 ```
 
+### Type Definition
+
+Find type definitions for access to procedures with a single parameter of type `Integer`.
+```ada
+type $S_P is access procedure ($S_I : Integer);
+```
+
 ### For All
 
 Ada 2012 has [quantified expressions](http://www.ada-auth.org/standards/12rat/html/Rat12-3-4.html).
