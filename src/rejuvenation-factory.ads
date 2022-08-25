@@ -45,6 +45,12 @@ package Rejuvenation.Factory is
    --  Return ASTs for all Ada files in a GPR project and
    --  recursively include projects not built separately.
 
+   function Open_Files_From_Project
+     (Project_Path : String; Recursive : Boolean := True)
+      return Analysis_Unit_Vectors.Vector;
+   --  Return ASTs for all Ada files in a GPR project and
+   --  recursively include projects not built separately.
+
    function Is_Ada_File_Built_By_Project
      (Filename  : String; Context : Project_Context;
       Recursive : Boolean := True) return Boolean;

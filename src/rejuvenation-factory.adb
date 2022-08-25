@@ -60,6 +60,13 @@ package body Rejuvenation.Factory is
       return Results;
    end Open_Files_From_Project;
 
+   function Open_Files_From_Project
+     (Project_Path : String; Recursive : Boolean := True)
+      return Analysis_Unit_Vectors.Vector is
+   begin
+      return Open_Files_From_Project (Open_Project (Project_Path), Recursive);
+   end Open_Files_From_Project;
+
    function Is_Ada_File_Built_By_Project
      (Filename  : String; Context : Project_Context;
       Recursive : Boolean := True) return Boolean
