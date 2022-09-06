@@ -153,6 +153,25 @@ package body Test_Find_And_Replacer is
          "Find and Replace with Nested case failed.");
    end Test_Nested_Find_And_Replacer;
 
+   procedure Test_Nested_Swap_Find_And_Replacer (T : in out Test_Case'Class);
+   procedure Test_Nested_Swap_Find_And_Replacer (T : in out Test_Case'Class) is
+      pragma Unreferenced (T);
+      Find_Pattern : constant Pattern :=
+        Make_Pattern ("f ($S_arg1, $S_arg2)", Expr_Rule);
+      Replace_Pattern : constant Pattern :=
+        Make_Pattern ("f ($S_arg2, $S_arg1)", Expr_Rule);
+      Unit : constant Analysis_Unit :=
+        Analyze_Fragment ("f (f (1, 2), 3)", Expr_Rule);
+      Expected_String : constant String :=
+        "f (3, f (2, 1))";
+      TR : Text_Rewrite'Class := Make_Text_Rewrite_Unit (Unit);
+   begin
+      Find_And_Replace (TR, Unit.Root, Find_Pattern, Replace_Pattern);
+      Assert_Equal_AST
+        (Expected_String, TR.ApplyToString, Expr_Rule,
+         "Find and Replace with Nested swap failed.");
+   end Test_Nested_Swap_Find_And_Replacer;
+
    --  Test plumbing
 
    overriding function Name
@@ -174,9 +193,11 @@ package body Test_Find_And_Replacer is
       Registration.Register_Routine
         (T, Test_If_Stmt_Find_And_Replacer'Access,
          "Find_And_Replacer If stmt (empty else branch)");
-
       Registration.Register_Routine
         (T, Test_Nested_Find_And_Replacer'Access, "Find_And_Replacer Nested");
+      Registration.Register_Routine
+        (T, Test_Nested_Swap_Find_And_Replacer'Access,
+         "Find_And_Replacer Nested Swap");
    end Register_Tests;
 
 end Test_Find_And_Replacer;
