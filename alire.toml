@@ -19,4 +19,4 @@ libadalang = "^22.0.0"          #  remove this dependency when libadalang is
                                   #  see https://github.com/AdaCore/libadalang-tools/issues/21
 
 [depends-on.'case(os)'.windows]
-gnat_native = "/=12.1.1 /=12.1.2"  # see https://github.com/AdaCore/libadalang/issues/949 for more info
+gnat_native = "<=11.2.4"  # see https://github.com/AdaCore/libadalang/issues/949 for more info
