@@ -59,6 +59,15 @@ A match will only be found when all occurrences of the same placeholder are iden
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
 the term backreference is used to denote a placeholder that reoccurs.
 
+The placeholder `$S_Dest` in the following find pattern
+```ada
+if $S_Cond then
+   $S_Dest := True;
+else
+   $S_Dest := False;
+end if;
+```
+ensures that the same destination is used in both branches of the if statement.
 
 ## placeholders in replace patterns
 
