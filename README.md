@@ -88,16 +88,19 @@ $S_Condition
 
 ## For All
 
-Ada 2012 has [quantified expressions](http://www.ada-auth.org/standards/12rat/html/Rat12-3-4.html).
+Ada 2012 has [quantified expressions](http://www.ada-auth.org/standards/12rat/html/Rat12-3-4.html). 
+When migrating code from earlier versions of Ada to Ada 2012 or beyond, the code should use these [quantified expressions](http://www.ada-auth.org/standards/12rat/html/Rat12-3-4.html).
+Furthermore, not all programming languages support [quantified expressions](http://www.ada-auth.org/standards/12rat/html/Rat12-3-4.html). 
+Hence, programmers educated in other languages might not be aware of [quantified expressions](http://www.ada-auth.org/standards/12rat/html/Rat12-3-4.html).
 
-Find pattern for code that is equivalent to returning a `for all` expression
+The following find pattern will detect all code that is equivalent to returning a `for all` expression
 ```ada
 for $S_Element of $S_Elements loop 
     if $S_Condition then return false; end if; 
 end loop;
 return true;
 ```
-Replace pattern to change the code to use the `for all` expression
+The following replace pattern will change the found code to use the `for all` expression
 ```ada
 return (for all $S_Element of $S_Elements => not ($S_Condition));
 ```
