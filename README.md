@@ -113,6 +113,8 @@ could be simplified into
  return (for all R of VS => Satisfies (V, R));
 ```
 
+## More Examples
+
 See 
 the [examples](examples), 
 the [workshop](workshop), and 
