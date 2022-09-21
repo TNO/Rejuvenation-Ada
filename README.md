@@ -136,6 +136,26 @@ the [workshop](workshop), and
 the [tests](tests)
 for inspiration to use the Rejuvenation Library.
 
+# Design
+
+## Dependencies
+
+The rejuvenation crate exploits the power of the abstract syntax as provided by [Libadalang](https://adaco.re/libadalang), 
+making the analysis and manipulation insensitive for layout and the presence of comments. 
+Yet, its interface does not expose [Libadalang](https://adaco.re/libadalang)'s abstract syntax. 
+Instead, its interface is almost identical to the concrete syntax of the Ada programming language. 
+
+The Rejuvenation-Ada library delegates the actual pretty-printing to `gnatpp` from the [libadalang-tools](https://github.com/AdaCore/libadalang-tools).
+The Rejuvenation-Ada library assumes that `gnatpp` is accessable on your system `PATH`.
+`gnatpp` can be installed using [Alire](https://alire.ada.dev/docs/#installation) using the command `alr get --build libadalang_tools`.
+
+## Usage
+Starting points for using the Rejuvenation-Ada library include:
+* find and replace based on concrete patterns using [`Rejuvenation.Finder`](src/rejuvenation-finder.ads) and [`Rejuvenation.Find_And_Replacer`](src/rejuvenation-find_and_replacer.ads);
+* programmatically analyze and manipulate using [`Rejuvenation.Text_Rewrites`](src/rejuvenation-text_rewrites.ads) to manipulate text and [`Rejuvenation.Match_Patterns`](src/rejuvenation-match_patterns.ads) to inspect a found match;
+* select the part, e.g. text, file, directory, or project, for analysis and manipulation using [`Rejuvenation.Simple_Factory`](src/rejuvenation-simple_factory.ads) and [`Rejuvenation.Factory`](src/rejuvenation-factory.ads); and
+* pretty print the manipulated code only, using [`Rejuvenation.Pretty_Print`](src/rejuvenation-pretty_print.ads).
+
 # Tools made using Rejuvenation
 * [Find Tool](find_tool) finds a pattern in a given project
 * [Find And Replace Tool](find_and_replace_tool) finds a pattern and replaces it with another in a given project
