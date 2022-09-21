@@ -77,6 +77,12 @@ A placeholder in the replace pattern will be replaced by the value of that place
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
 all placeholders in a replace pattern can be called backreferences.
 
+The following replace pattern 
+```ada
+$S_Dest := $S_Cond;
+```
+simplifies the code found with the previous find pattern using the backreferences `$S_Cond` and `$S_Dest`.
+
 # Examples
 
 ## Double Negation
