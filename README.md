@@ -123,7 +123,7 @@ https://github.com/alire-project/semantic_versioning) project:
 [<img src="https://user-images.githubusercontent.com/18348654/189627879-93b787b0-853f-4943-b536-98b8fe8f41ac.png" width="350"/>](
 https://github.com/alire-project/semantic_versioning/blob/cc69201134c0a8d695b767a1fd1bf4fd8f6f3880/src/semantic_versioning-basic.adb#L81-L87])
 
-could be simplified into
+could be automatically simplified into
 ```ada
  return (for all R of VS => Satisfies (V, R));
 ```
