@@ -39,7 +39,7 @@ start;
 
 # Powerful Analysis and Manipulation using Placeholders
 
-Since Ada's concrete syntax can be easily extended by using characters, such as `$`, that are illegal in the Ada programming language (except inside character and string literals), the Rejuvenation-Ada library is able to make the analysis and manipulation of Ada code more powerful, by adding just one one extension to Ada's concrete syntax: Placeholders. 
+Since Ada's concrete syntax can be easily extended by using characters, such as `$`, that are illegal in the Ada programming language (except inside character and string literals), the Rejuvenation-Ada library is able to make the analysis and manipulation of Ada code more powerful, by adding just one extension to Ada's concrete syntax: Placeholders. 
 
 There are two types of placeholders, those starting with "$S_" and those starting with "$M_".
 Any alphanumeric string is allowed to follow after those prefixes.
