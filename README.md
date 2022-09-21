@@ -57,7 +57,7 @@ A find pattern might contain the same placeholder multiple times.
 This adds a constraint to the find process:
 A match will only be found when all occurrences of the same placeholder are identical.
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
-the term backreference is used to denote a placeholder that reoccurs.
+the term [backreference](https://en.wikipedia.org/wiki/Regular_expression#backreferences) is used to denote a placeholder that reoccurs.
 
 The placeholder `$S_Dest` in the following find pattern
 ```ada
@@ -75,7 +75,7 @@ A placeholder in a replace pattern always refers to that placeholder in the find
 A placeholder in a replace pattern that does not occur in the find pattern is thus an error.
 A placeholder in the replace pattern will be replaced by the value of that placeholder in the match of the find pattern.
 In analogy with [Regular Expressions](https://en.wikipedia.org/wiki/Regular_expression), 
-all placeholders in a replace pattern can be called backreferences.
+all placeholders in a replace pattern can be called [backreference](https://en.wikipedia.org/wiki/Regular_expression#backreferences).
 
 The following replace pattern 
 ```ada
