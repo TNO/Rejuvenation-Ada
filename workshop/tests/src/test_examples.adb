@@ -142,7 +142,7 @@ package body Test_Examples is
                begin
                   Put_Line
                     (Image (OD.Full_Sloc_Image) &
-                     "Found Object Decl for Id(s) " & Image (OD.F_Ids.Text));
+                       "Found Object Decl for Id(s) " & Image (OD.F_Ids.Text));
                end;
                return Into;
             when others =>
@@ -196,7 +196,7 @@ package body Test_Examples is
          begin
             Put_Line
               (Image (OD.Full_Sloc_Image) & "Found Object Decl for Id(s) " &
-               Image (OD.F_Ids.Text));
+                 Image (OD.F_Ids.Text));
          end;
       end loop;
       Put_Line ("Done - " & Enclosing_Entity);
@@ -232,7 +232,7 @@ package body Test_Examples is
             end loop;
             Put_Line
               (Image (OD.Full_Sloc_Image) & "Found Object Decl for Id(s) " &
-               To_String (Vars_String) & ": Ada_Node := " & DefaultExpr);
+                 To_String (Vars_String) & ": Ada_Node := " & DefaultExpr);
          end;
       end loop;
       Put_Line ("Done - " & Enclosing_Entity);
@@ -292,78 +292,83 @@ package body Test_Examples is
 
    begin
       declare
-         Unit : constant Analysis_Unit :=
-           Analyze_File_In_Project
-             ("../src/parentpackage-childpackage.adb", "../workshop.gpr");
-         CU : constant Compilation_Unit := Unit.Root.As_Compilation_Unit;
-      begin
-         Assert
-           (Condition => CU.P_Unit_Kind = Unit_Body,
-            Message   => "*.adb is unexpectedly not a Unit_Body");
-         Put_Line ("Withed");
-         for WU of CU.P_Withed_Units loop
-            Put_Line ("   " & Image (WU.P_Decl.P_Defining_Name.Text));
-         end loop;
-         Assert
-           (Condition => CU.P_Withed_Units'Length = 1,
-            Message   =>
-              "Length of Withed Units is unexpectedly not 1 but " &
-              CU.P_Withed_Units'Length'Image);
-         Put_Line ("Imported");
-         for IU of CU.P_Imported_Units loop
-            Put_Line ("   " & Image (IU.P_Decl.P_Defining_Name.Text));
-         end loop;
-         Assert
-           (Condition => CU.P_Imported_Units'Length = 2,
-            Message   =>
-              "Length of Imported Units is unexpectedly not 2 but " &
-              CU.P_Imported_Units'Length'Image);
-         Put_Line ("Dependencies");
-         for UD of CU.P_Unit_Dependencies loop
-            Put_Line ("   " & Image (UD.P_Decl.P_Defining_Name.Text));
-         end loop;
-         Assert
-           (Condition => CU.P_Unit_Dependencies'Length = 17,
-            Message   =>
-              "Length of Unit Dependencies is unexpectedly not 17 but " &
-              CU.P_Unit_Dependencies'Length'Image);
-      end;
-      declare
-         Unit : constant Analysis_Unit :=
+         SUnit : constant Analysis_Unit :=
            Analyze_File_In_Project
              ("../src/parentpackage-childpackage.ads", "../workshop.gpr");
-         CU : constant Compilation_Unit := Unit.Root.As_Compilation_Unit;
+         SCompilationUnit : constant Compilation_Unit :=
+           SUnit.Root.As_Compilation_Unit;
       begin
          Assert
-           (Condition => CU.P_Unit_Kind = Unit_Specification,
+           (Condition => SCompilationUnit.P_Unit_Kind = Unit_Specification,
             Message   => "*.ads is unexpectedly not a Unit_Specification");
          Put_Line ("Withed");
-         for WU of CU.P_Withed_Units loop
+         for WU of SCompilationUnit.P_Withed_Units loop
             Put_Line ("   " & Image (WU.P_Decl.P_Defining_Name.Text));
          end loop;
          Assert
-           (Condition => CU.P_Withed_Units'Length = 1,
+           (Condition => SCompilationUnit.P_Withed_Units'Length = 1,
             Message   =>
               "Length of Withed Units is unexpectedly not 1 but " &
-              CU.P_Withed_Units'Length'Image);
+              SCompilationUnit.P_Withed_Units'Length'Image);
          Put_Line ("Imported");
-         for IU of CU.P_Imported_Units loop
+         for IU of SCompilationUnit.P_Imported_Units loop
             Put_Line ("   " & Image (IU.P_Decl.P_Defining_Name.Text));
          end loop;
          Assert
-           (Condition => CU.P_Imported_Units'Length = 2,
+           (Condition => SCompilationUnit.P_Imported_Units'Length = 2,
             Message   =>
               "Length of Imported Units is unexpectedly not 2 but " &
-              CU.P_Imported_Units'Length'Image);
+              SCompilationUnit.P_Imported_Units'Length'Image);
          Put_Line ("Dependencies");
-         for UD of CU.P_Unit_Dependencies loop
+         for UD of SCompilationUnit.P_Unit_Dependencies loop
             Put_Line ("   " & Image (UD.P_Decl.P_Defining_Name.Text));
          end loop;
          Assert
-           (Condition => CU.P_Unit_Dependencies'Length = 15,
+           (Condition => SCompilationUnit.P_Unit_Dependencies'Length >= 5,
             Message   =>
-              "Length of Unit Dependencies is unexpectedly not 15 but " &
-              CU.P_Unit_Dependencies'Length'Image);
+              "Length of Unit Dependencies is unexpectedly not at least 5 but "
+            & SCompilationUnit.P_Unit_Dependencies'Length'Image);
+         declare
+            BUnit : constant Analysis_Unit :=
+              Analyze_File_In_Project
+                ("../src/parentpackage-childpackage.adb", "../workshop.gpr");
+            BCompilationUnit : constant Compilation_Unit :=
+              BUnit.Root.As_Compilation_Unit;
+         begin
+            Assert
+              (Condition => BCompilationUnit.P_Unit_Kind = Unit_Body,
+               Message   => "*.adb is unexpectedly not a Unit_Body");
+            Put_Line ("Withed");
+            for WU of BCompilationUnit.P_Withed_Units loop
+               Put_Line ("   " & Image (WU.P_Decl.P_Defining_Name.Text));
+            end loop;
+            Assert
+              (Condition => BCompilationUnit.P_Withed_Units'Length = 1,
+               Message   =>
+                 "Length of Withed Units is unexpectedly not 1 but " &
+                 BCompilationUnit.P_Withed_Units'Length'Image);
+            Put_Line ("Imported");
+            for IU of BCompilationUnit.P_Imported_Units loop
+               Put_Line ("   " & Image (IU.P_Decl.P_Defining_Name.Text));
+            end loop;
+            Assert
+              (Condition => BCompilationUnit.P_Imported_Units'Length = 2,
+               Message   =>
+                 "Length of Imported Units is unexpectedly not 2 but " &
+                 BCompilationUnit.P_Imported_Units'Length'Image);
+            Put_Line ("Dependencies");
+            for UD of BCompilationUnit.P_Unit_Dependencies loop
+               Put_Line ("   " & Image (UD.P_Decl.P_Defining_Name.Text));
+            end loop;
+            Assert
+              (Condition => BCompilationUnit.P_Unit_Dependencies'Length =
+                 SCompilationUnit.P_Unit_Dependencies'Length + 2,
+               Message   =>
+                 "Length of Unit Dependencies is unexpectedly not (2 + " &
+                 SCompilationUnit.P_Unit_Dependencies'Length'Image &
+                 ") but " &
+                 BCompilationUnit.P_Unit_Dependencies'Length'Image);
+         end;
       end;
    end Test_Units;
 
@@ -404,7 +409,7 @@ package body Test_Examples is
       Registration.Register_Routine
         (T, Test_Rejuvenation_Match_Pattern'Access,
          "Rejuvenation Match Pattern for Object Declarations " &
-         "with type Ada_Node and a default expression");
+           "with type Ada_Node and a default expression");
       Registration.Register_Routine
         (T, Test_Text_Rewrite'Access, "Rejuvenation Text Rewrite ");
       Registration.Register_Routine
