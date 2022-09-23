@@ -323,10 +323,12 @@ package body Test_Examples is
          for UD of SCompilationUnit.P_Unit_Dependencies loop
             Put_Line ("   " & Image (UD.P_Decl.P_Defining_Name.Text));
          end loop;
+         --  Dependencies include at least:
+         --  Ada, Ada.Assertions, Ada.Text_IO, and ParentPackage
          Assert
-           (Condition => SCompilationUnit.P_Unit_Dependencies'Length >= 5,
+           (Condition => SCompilationUnit.P_Unit_Dependencies'Length >= 4,
             Message   =>
-              "Length of Unit Dependencies is unexpectedly not at least 5 but "
+              "Length of Unit Dependencies is unexpectedly not at least 4 but "
             & SCompilationUnit.P_Unit_Dependencies'Length'Image);
          declare
             BUnit : constant Analysis_Unit :=
