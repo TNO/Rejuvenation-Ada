@@ -17,6 +17,3 @@ libadalang = "^22.0.0"          #  remove this dependency when libadalang is
 # libadalang_tools = "^22.0.0"    #  needs gnatpp from libadalang_tools installed on PATH
                                   #  Alire is not yet capable to add gnatpp to PATH.
                                   #  see https://github.com/AdaCore/libadalang-tools/issues/21
-
-[depends-on.'case(os)'.windows]
-gnat_native = "<=11.2.4"  # see https://github.com/AdaCore/libadalang/issues/949 for more info
