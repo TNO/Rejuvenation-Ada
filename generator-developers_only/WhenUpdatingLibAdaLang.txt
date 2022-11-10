@@ -1,6 +1,6 @@
 When upgrading LibAdaLang a new version for Match Pattern has to be made.
 
-1. Remove in Match Patterns (in rejuvenation library) 
+1. Remove in rejuvenation-match_patterns.adb (in rejuvenation library)
 all code between
          -- Begin of generated fragment using Rejuvenation_Lib_Generator --------
 and
@@ -12,7 +12,7 @@ to point to correct / new LibAdaLang version
 
 3. Run program
 
-4. copy output in Match Pattern (in rejuvenation library) 
+4. copy output in rejuvenation-match_patterns.adb (in rejuvenation library)
 between
          -- Begin of generated fragment using Rejuvenation_Lib_Generator --------
 and

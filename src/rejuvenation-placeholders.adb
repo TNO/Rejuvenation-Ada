@@ -50,16 +50,17 @@ package body Rejuvenation.Placeholders is
                end if;
             end;
 
-         when Ada_Discriminant_Assoc =>
+         when Ada_Composite_Constraint_Assoc =>
             declare
-               D_A : constant Discriminant_Assoc := Node.As_Discriminant_Assoc;
-               Ids        : constant Discriminant_Choice_List := D_A.F_Ids;
-               Discr_Expr : constant Expr := D_A.F_Discr_Expr;
+               C_C_A : constant Composite_Constraint_Assoc :=
+                 Node.As_Composite_Constraint_Assoc;
+               Ids : constant Discriminant_Choice_List := C_C_A.F_Ids;
+               Constraint_Expr : constant Ada_Node := C_C_A.F_Constraint_Expr;
             begin
                if Ids.Children_Count = 0
-                 and then Discr_Expr.Kind = Ada_Identifier
+                 and then Constraint_Expr.Kind = Ada_Identifier
                then
-                  return Raw_Signature (Discr_Expr);
+                  return Raw_Signature (Constraint_Expr);
                end if;
             end;
 
@@ -133,7 +134,9 @@ package body Rejuvenation.Placeholders is
       end Visit;
 
    begin
-      Node.Traverse (Visit'Access);
+      if not Node.Is_Null then
+         Node.Traverse (Visit'Access);
+      end if;
       return Result;
    end Get_Placeholder_Names;
 

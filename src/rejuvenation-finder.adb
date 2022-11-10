@@ -153,8 +153,7 @@ package body Rejuvenation.Finder is
       function Visit (Node : Ada_Node'Class) return Visit_Status is
       begin
          if Predicate (Node) then
-            Result.Append (Ada_Node (Node));
-            --  TODO: look up which was prefer Node.As_Ada_Node or this
+            Result.Append (Node.As_Ada_Node);
             return Next;
          else
             return Into;
@@ -162,7 +161,9 @@ package body Rejuvenation.Finder is
       end Visit;
 
    begin
-      Node.Traverse (Visit'Access);
+      if not Node.Is_Null then
+         Node.Traverse (Visit'Access);
+      end if;
       return Result;
    end Find_Predicate;
 

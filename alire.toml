@@ -10,7 +10,7 @@ maintainers = ["Pierre van de Laar <pierre.van.de.laar@gmail.com>"]
 maintainers-logins = ["pjljvandelaar"]
 
 [[depends-on]]
-libadalang = "^22.0.0"          #  remove this dependency when libadalang is 
+libadalang = "^23.0.0"          #  remove this dependency when libadalang is 
                                 #  already installed on your system
                                 #  and accessible via your GPR_PROJECT_PATH
 

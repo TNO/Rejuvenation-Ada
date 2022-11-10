@@ -10,7 +10,7 @@ executables = ["tests_workshop"]
 
 [[depends-on]]
 aunit = "^22.0.0"
-libadalang = "^22.0.0"
+libadalang = "^23.0.0"
 rejuvenation = "^22.0.0"
 workshop = "^22.0.0"
 

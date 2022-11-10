@@ -524,10 +524,8 @@ package body Rejuvenation.Match_Patterns is
    function filter (Node : Ada_Node) return Ada_Node_Array;
    function filter (Node : Ada_Node) return Ada_Node_Array is
    begin
-      if Node.Kind = Ada_Discriminant_Constraint then
-         return Node.As_Discriminant_Constraint.F_Constraints.Children;
-      elsif Node.Kind = Ada_Index_Constraint then
-         return Node.As_Index_Constraint.F_Constraints.Children;
+      if Node.Kind = Ada_Composite_Constraint then
+         return Node.As_Composite_Constraint.F_Constraints.Children;
       else
          return (1 => Node);
       end if;
@@ -538,9 +536,8 @@ package body Rejuvenation.Match_Patterns is
       Instance :        Ada_Node'Class) return Boolean
    is
    begin
-      if Pattern.Kind in Ada_Discriminant_Constraint | Ada_Index_Constraint
-        or else Instance.Kind in Ada_Discriminant_Constraint |
-            Ada_Index_Constraint
+      if Pattern.Kind = Ada_Composite_Constraint
+        or else Instance.Kind = Ada_Composite_Constraint
       then
          declare
             filtered_Pattern : constant Ada_Node_Array :=
@@ -651,6 +648,15 @@ package body Rejuvenation.Match_Patterns is
                 (Pattern2.F_Subtype_Indication,
                  Instance2.F_Subtype_Indication);
          end;
+      elsif Pattern.Kind = Ada_Composite_Constraint then
+         declare
+            Pattern2 : constant Composite_Constraint :=
+              Pattern.As_Composite_Constraint;
+            Instance2 : constant Composite_Constraint :=
+              Instance.As_Composite_Constraint;
+         begin
+            return MP.Match (Pattern2.F_Constraints, Instance2.F_Constraints);
+         end;
       elsif Pattern.Kind = Ada_Aggregate_Assoc then
          declare
             Pattern2  : constant Aggregate_Assoc := Pattern.As_Aggregate_Assoc;
@@ -714,6 +720,17 @@ package body Rejuvenation.Match_Patterns is
               and then MP.Match
                 (Pattern2.F_Discriminants, Instance2.F_Discriminants)
               and then MP.Match (Pattern2.F_Type_Def, Instance2.F_Type_Def);
+         end;
+      elsif Pattern.Kind = Ada_Synthetic_Char_Enum_Lit then
+         declare
+            Pattern2 : constant Synthetic_Char_Enum_Lit :=
+              Pattern.As_Synthetic_Char_Enum_Lit;
+            Instance2 : constant Synthetic_Char_Enum_Lit :=
+              Instance.As_Synthetic_Char_Enum_Lit;
+         begin
+            return
+              MP.Match (Pattern2.F_Aspects, Instance2.F_Aspects)
+              and then MP.Match (Pattern2.F_Name, Instance2.F_Name);
          end;
       elsif Pattern.Kind = Ada_Generic_Subp_Instantiation then
          declare
@@ -792,6 +809,15 @@ package body Rejuvenation.Match_Patterns is
               MP.Match (Pattern2.F_Spec, Instance2.F_Spec)
               and then MP.Match (Pattern2.F_Stmts, Instance2.F_Stmts)
               and then MP.Match (Pattern2.F_End_Name, Instance2.F_End_Name);
+         end;
+      elsif Pattern.Kind = Ada_Concat_Operand then
+         declare
+            Pattern2  : constant Concat_Operand := Pattern.As_Concat_Operand;
+            Instance2 : constant Concat_Operand := Instance.As_Concat_Operand;
+         begin
+            return
+              MP.Match (Pattern2.F_Operator, Instance2.F_Operator)
+              and then MP.Match (Pattern2.F_Operand, Instance2.F_Operand);
          end;
       elsif Pattern.Kind = Ada_Task_Body_Stub then
          declare
@@ -1067,18 +1093,6 @@ package body Rejuvenation.Match_Patterns is
               MP.Match (Pattern2.F_Op, Instance2.F_Op)
               and then MP.Match (Pattern2.F_Expr, Instance2.F_Expr);
          end;
-      elsif Pattern.Kind = Ada_Type_Decl then
-         declare
-            Pattern2  : constant Type_Decl := Pattern.As_Type_Decl;
-            Instance2 : constant Type_Decl := Instance.As_Type_Decl;
-         begin
-            return
-              MP.Match (Pattern2.F_Aspects, Instance2.F_Aspects)
-              and then MP.Match (Pattern2.F_Name, Instance2.F_Name)
-              and then MP.Match
-                (Pattern2.F_Discriminants, Instance2.F_Discriminants)
-              and then MP.Match (Pattern2.F_Type_Def, Instance2.F_Type_Def);
-         end;
       elsif Pattern.Kind = Ada_Null_Record_Aggregate then
          declare
             Pattern2 : constant Null_Record_Aggregate :=
@@ -1273,6 +1287,7 @@ package body Rejuvenation.Match_Patterns is
          begin
             return
               MP.Match (Pattern2.F_Expr, Instance2.F_Expr)
+              and then MP.Match (Pattern2.F_Pragmas, Instance2.F_Pragmas)
               and then MP.Match
                 (Pattern2.F_Alternatives, Instance2.F_Alternatives);
          end;
@@ -1299,6 +1314,22 @@ package body Rejuvenation.Match_Patterns is
               and then MP.Match (Pattern2.F_Type_Expr, Instance2.F_Type_Expr)
               and then MP.Match
                 (Pattern2.F_Default_Expr, Instance2.F_Default_Expr);
+         end;
+      elsif Pattern.Kind = Ada_Formal_Type_Decl then
+         declare
+            Pattern2 : constant Formal_Type_Decl :=
+              Pattern.As_Formal_Type_Decl;
+            Instance2 : constant Formal_Type_Decl :=
+              Instance.As_Formal_Type_Decl;
+         begin
+            return
+              MP.Match (Pattern2.F_Aspects, Instance2.F_Aspects)
+              and then MP.Match (Pattern2.F_Name, Instance2.F_Name)
+              and then MP.Match
+                (Pattern2.F_Discriminants, Instance2.F_Discriminants)
+              and then MP.Match (Pattern2.F_Type_Def, Instance2.F_Type_Def)
+              and then MP.Match
+                (Pattern2.F_Default_Type, Instance2.F_Default_Type);
          end;
       elsif Pattern.Kind = Ada_Number_Decl then
          declare
@@ -1478,6 +1509,18 @@ package body Rejuvenation.Match_Patterns is
               and then MP.Match (Pattern2.F_Stmts, Instance2.F_Stmts)
               and then MP.Match (Pattern2.F_End_Name, Instance2.F_End_Name);
          end;
+      elsif Pattern.Kind = Ada_Synthetic_Formal_Param_Decl then
+         declare
+            Pattern2 : constant Synthetic_Formal_Param_Decl :=
+              Pattern.As_Synthetic_Formal_Param_Decl;
+            Instance2 : constant Synthetic_Formal_Param_Decl :=
+              Instance.As_Synthetic_Formal_Param_Decl;
+         begin
+            return
+              MP.Match (Pattern2.F_Aspects, Instance2.F_Aspects)
+              and then MP.Match
+                (Pattern2.F_Param_Type, Instance2.F_Param_Type);
+         end;
       elsif Pattern.Kind = Ada_Subtype_Indication then
          declare
             Pattern2 : constant Subtype_Indication :=
@@ -1557,6 +1600,20 @@ package body Rejuvenation.Match_Patterns is
               and then MP.Match (Pattern2.F_Stmts, Instance2.F_Stmts)
               and then MP.Match (Pattern2.F_End_Name, Instance2.F_End_Name);
          end;
+      elsif Pattern.Kind = Ada_Concrete_Type_Decl then
+         declare
+            Pattern2 : constant Concrete_Type_Decl :=
+              Pattern.As_Concrete_Type_Decl;
+            Instance2 : constant Concrete_Type_Decl :=
+              Instance.As_Concrete_Type_Decl;
+         begin
+            return
+              MP.Match (Pattern2.F_Aspects, Instance2.F_Aspects)
+              and then MP.Match (Pattern2.F_Name, Instance2.F_Name)
+              and then MP.Match
+                (Pattern2.F_Discriminants, Instance2.F_Discriminants)
+              and then MP.Match (Pattern2.F_Type_Def, Instance2.F_Type_Def);
+         end;
       elsif Pattern.Kind = Ada_Call_Stmt then
          declare
             Pattern2  : constant Call_Stmt := Pattern.As_Call_Stmt;
@@ -1564,17 +1621,37 @@ package body Rejuvenation.Match_Patterns is
          begin
             return MP.Match (Pattern2.F_Call, Instance2.F_Call);
          end;
-      elsif Pattern.Kind = Ada_Discriminant_Assoc then
+      elsif Pattern.Kind = Ada_Reduce_Attribute_Ref then
          declare
-            Pattern2 : constant Discriminant_Assoc :=
-              Pattern.As_Discriminant_Assoc;
-            Instance2 : constant Discriminant_Assoc :=
-              Instance.As_Discriminant_Assoc;
+            Pattern2 : constant Reduce_Attribute_Ref :=
+              Pattern.As_Reduce_Attribute_Ref;
+            Instance2 : constant Reduce_Attribute_Ref :=
+              Instance.As_Reduce_Attribute_Ref;
          begin
             return
-              MP.Match (Pattern2.F_Ids, Instance2.F_Ids)
-              and then MP.Match
-                (Pattern2.F_Discr_Expr, Instance2.F_Discr_Expr);
+              MP.Match (Pattern2.F_Prefix, Instance2.F_Prefix)
+              and then MP.Match (Pattern2.F_Attribute, Instance2.F_Attribute)
+              and then MP.Match (Pattern2.F_Args, Instance2.F_Args);
+         end;
+      elsif Pattern.Kind = Ada_Synthetic_Type_Expr then
+         declare
+            Pattern2 : constant Synthetic_Type_Expr :=
+              Pattern.As_Synthetic_Type_Expr;
+            Instance2 : constant Synthetic_Type_Expr :=
+              Instance.As_Synthetic_Type_Expr;
+         begin
+            return MP.Match (Pattern2.F_Target_Type, Instance2.F_Target_Type);
+         end;
+      elsif Pattern.Kind = Ada_Pp_Elsif_Directive then
+         declare
+            Pattern2 : constant Pp_Elsif_Directive :=
+              Pattern.As_Pp_Elsif_Directive;
+            Instance2 : constant Pp_Elsif_Directive :=
+              Instance.As_Pp_Elsif_Directive;
+         begin
+            return
+              MP.Match (Pattern2.F_Expr, Instance2.F_Expr)
+              and then MP.Match (Pattern2.F_Then_Kw, Instance2.F_Then_Kw);
          end;
       elsif Pattern.Kind = Ada_Array_Type_Def then
          declare
@@ -1622,15 +1699,6 @@ package body Rejuvenation.Match_Patterns is
               Instance.As_Known_Discriminant_Part;
          begin
             return MP.Match (Pattern2.F_Discr_Specs, Instance2.F_Discr_Specs);
-         end;
-      elsif Pattern.Kind = Ada_Index_Constraint then
-         declare
-            Pattern2 : constant Index_Constraint :=
-              Pattern.As_Index_Constraint;
-            Instance2 : constant Index_Constraint :=
-              Instance.As_Index_Constraint;
-         begin
-            return MP.Match (Pattern2.F_Constraints, Instance2.F_Constraints);
          end;
       elsif Pattern.Kind = Ada_Discrete_Base_Subtype_Decl then
          declare
@@ -1726,6 +1794,17 @@ package body Rejuvenation.Match_Patterns is
          begin
             return MP.Match (Pattern2.F_Return_Expr, Instance2.F_Return_Expr);
          end;
+      elsif Pattern.Kind = Ada_Synthetic_Subp_Decl then
+         declare
+            Pattern2 : constant Synthetic_Subp_Decl :=
+              Pattern.As_Synthetic_Subp_Decl;
+            Instance2 : constant Synthetic_Subp_Decl :=
+              Instance.As_Synthetic_Subp_Decl;
+         begin
+            return
+              MP.Match (Pattern2.F_Aspects, Instance2.F_Aspects)
+              and then MP.Match (Pattern2.F_Spec, Instance2.F_Spec);
+         end;
       elsif Pattern.Kind = Ada_Exception_Handler then
          declare
             Pattern2 : constant Exception_Handler :=
@@ -1751,7 +1830,7 @@ package body Rejuvenation.Match_Patterns is
             return
               MP.Match (Pattern2.F_Prefix, Instance2.F_Prefix)
               and then MP.Match (Pattern2.F_Attribute, Instance2.F_Attribute)
-              and then MP.Match (Pattern2.F_Args, Instance2.F_Args);
+              and then MP.Match (Pattern2.F_Values, Instance2.F_Values);
          end;
       elsif Pattern.Kind = Ada_Record_Def then
          declare
@@ -1815,12 +1894,38 @@ package body Rejuvenation.Match_Patterns is
               and then MP.Match
                 (Pattern2.F_Components, Instance2.F_Components);
          end;
+      elsif Pattern.Kind = Ada_Incomplete_Formal_Type_Decl then
+         declare
+            Pattern2 : constant Incomplete_Formal_Type_Decl :=
+              Pattern.As_Incomplete_Formal_Type_Decl;
+            Instance2 : constant Incomplete_Formal_Type_Decl :=
+              Instance.As_Incomplete_Formal_Type_Decl;
+         begin
+            return
+              MP.Match (Pattern2.F_Aspects, Instance2.F_Aspects)
+              and then MP.Match (Pattern2.F_Name, Instance2.F_Name)
+              and then MP.Match
+                (Pattern2.F_Discriminants, Instance2.F_Discriminants)
+              and then MP.Match (Pattern2.F_Is_Tagged, Instance2.F_Is_Tagged)
+              and then MP.Match
+                (Pattern2.F_Default_Type, Instance2.F_Default_Type);
+         end;
       elsif Pattern.Kind = Ada_Range_Spec then
          declare
             Pattern2  : constant Range_Spec := Pattern.As_Range_Spec;
             Instance2 : constant Range_Spec := Instance.As_Range_Spec;
          begin
             return MP.Match (Pattern2.F_Range, Instance2.F_Range);
+         end;
+      elsif Pattern.Kind = Ada_Concat_Op then
+         declare
+            Pattern2  : constant Concat_Op := Pattern.As_Concat_Op;
+            Instance2 : constant Concat_Op := Instance.As_Concat_Op;
+         begin
+            return
+              MP.Match (Pattern2.F_First_Operand, Instance2.F_First_Operand)
+              and then MP.Match
+                (Pattern2.F_Other_Operands, Instance2.F_Other_Operands);
          end;
       elsif Pattern.Kind = Ada_With_Clause then
          declare
@@ -1832,6 +1937,18 @@ package body Rejuvenation.Match_Patterns is
               and then MP.Match
                 (Pattern2.F_Has_Private, Instance2.F_Has_Private)
               and then MP.Match (Pattern2.F_Packages, Instance2.F_Packages);
+         end;
+      elsif Pattern.Kind = Ada_Composite_Constraint_Assoc then
+         declare
+            Pattern2 : constant Composite_Constraint_Assoc :=
+              Pattern.As_Composite_Constraint_Assoc;
+            Instance2 : constant Composite_Constraint_Assoc :=
+              Instance.As_Composite_Constraint_Assoc;
+         begin
+            return
+              MP.Match (Pattern2.F_Ids, Instance2.F_Ids)
+              and then MP.Match
+                (Pattern2.F_Constraint_Expr, Instance2.F_Constraint_Expr);
          end;
       elsif Pattern.Kind = Ada_Subp_Body then
          declare
@@ -1872,6 +1989,32 @@ package body Rejuvenation.Match_Patterns is
               and then MP.Match (Pattern2.F_Else_Stmts, Instance2.F_Else_Stmts)
               and then MP.Match
                 (Pattern2.F_Abort_Stmts, Instance2.F_Abort_Stmts);
+         end;
+      elsif Pattern.Kind = Ada_Synthetic_Binary_Spec then
+         declare
+            Pattern2 : constant Synthetic_Binary_Spec :=
+              Pattern.As_Synthetic_Binary_Spec;
+            Instance2 : constant Synthetic_Binary_Spec :=
+              Instance.As_Synthetic_Binary_Spec;
+         begin
+            return
+              MP.Match (Pattern2.F_Left_Param, Instance2.F_Left_Param)
+              and then MP.Match
+                (Pattern2.F_Right_Param, Instance2.F_Right_Param)
+              and then MP.Match
+                (Pattern2.F_Return_Type_Expr, Instance2.F_Return_Type_Expr);
+         end;
+      elsif Pattern.Kind = Ada_Synthetic_Unary_Spec then
+         declare
+            Pattern2 : constant Synthetic_Unary_Spec :=
+              Pattern.As_Synthetic_Unary_Spec;
+            Instance2 : constant Synthetic_Unary_Spec :=
+              Instance.As_Synthetic_Unary_Spec;
+         begin
+            return
+              MP.Match (Pattern2.F_Right_Param, Instance2.F_Right_Param)
+              and then MP.Match
+                (Pattern2.F_Return_Type_Expr, Instance2.F_Return_Type_Expr);
          end;
       elsif Pattern.Kind = Ada_Subp_Renaming_Decl then
          declare
@@ -2185,6 +2328,13 @@ package body Rejuvenation.Match_Patterns is
          begin
             return MP.Match (Pattern2.F_Names, Instance2.F_Names);
          end;
+      elsif Pattern.Kind = Ada_Value_Sequence then
+         declare
+            Pattern2  : constant Value_Sequence := Pattern.As_Value_Sequence;
+            Instance2 : constant Value_Sequence := Instance.As_Value_Sequence;
+         begin
+            return MP.Match (Pattern2.F_Iter_Assoc, Instance2.F_Iter_Assoc);
+         end;
       elsif Pattern.Kind = Ada_Generic_Package_Instantiation then
          declare
             Pattern2 : constant Generic_Package_Instantiation :=
@@ -2344,6 +2494,27 @@ package body Rejuvenation.Match_Patterns is
               MP.Match (Pattern2.F_Aspects, Instance2.F_Aspects)
               and then MP.Match (Pattern2.F_Task_Type, Instance2.F_Task_Type);
          end;
+      elsif Pattern.Kind = Ada_No_Type_Object_Renaming_Decl then
+         declare
+            Pattern2 : constant No_Type_Object_Renaming_Decl :=
+              Pattern.As_No_Type_Object_Renaming_Decl;
+            Instance2 : constant No_Type_Object_Renaming_Decl :=
+              Instance.As_No_Type_Object_Renaming_Decl;
+         begin
+            return
+              MP.Match (Pattern2.F_Aspects, Instance2.F_Aspects)
+              and then MP.Match (Pattern2.F_Ids, Instance2.F_Ids)
+              and then MP.Match
+                (Pattern2.F_Has_Aliased, Instance2.F_Has_Aliased)
+              and then MP.Match
+                (Pattern2.F_Has_Constant, Instance2.F_Has_Constant)
+              and then MP.Match (Pattern2.F_Mode, Instance2.F_Mode)
+              and then MP.Match (Pattern2.F_Type_Expr, Instance2.F_Type_Expr)
+              and then MP.Match
+                (Pattern2.F_Default_Expr, Instance2.F_Default_Expr)
+              and then MP.Match
+                (Pattern2.F_Renaming_Clause, Instance2.F_Renaming_Clause);
+         end;
       elsif Pattern.Kind = Ada_Exception_Decl then
          declare
             Pattern2  : constant Exception_Decl := Pattern.As_Exception_Decl;
@@ -2459,6 +2630,16 @@ package body Rejuvenation.Match_Patterns is
          begin
             return MP.Match (Pattern2.F_Decls, Instance2.F_Decls);
          end;
+      elsif Pattern.Kind = Ada_Pp_If_Directive then
+         declare
+            Pattern2  : constant Pp_If_Directive := Pattern.As_Pp_If_Directive;
+            Instance2 : constant Pp_If_Directive :=
+              Instance.As_Pp_If_Directive;
+         begin
+            return
+              MP.Match (Pattern2.F_Expr, Instance2.F_Expr)
+              and then MP.Match (Pattern2.F_Then_Kw, Instance2.F_Then_Kw);
+         end;
       elsif Pattern.Kind = Ada_For_Loop_Spec then
          declare
             Pattern2  : constant For_Loop_Spec := Pattern.As_For_Loop_Spec;
@@ -2469,7 +2650,9 @@ package body Rejuvenation.Match_Patterns is
               and then MP.Match (Pattern2.F_Loop_Type, Instance2.F_Loop_Type)
               and then MP.Match
                 (Pattern2.F_Has_Reverse, Instance2.F_Has_Reverse)
-              and then MP.Match (Pattern2.F_Iter_Expr, Instance2.F_Iter_Expr);
+              and then MP.Match (Pattern2.F_Iter_Expr, Instance2.F_Iter_Expr)
+              and then MP.Match
+                (Pattern2.F_Iter_Filter, Instance2.F_Iter_Filter);
          end;
       elsif Pattern.Kind = Ada_Incomplete_Tagged_Type_Decl then
          declare
@@ -2543,6 +2726,15 @@ package body Rejuvenation.Match_Patterns is
               MP.Match (Pattern2.F_Has_Private, Instance2.F_Has_Private)
               and then MP.Match (Pattern2.F_Item, Instance2.F_Item);
          end;
+      elsif Pattern.Kind = Ada_Synthetic_Defining_Name then
+         declare
+            Pattern2 : constant Synthetic_Defining_Name :=
+              Pattern.As_Synthetic_Defining_Name;
+            Instance2 : constant Synthetic_Defining_Name :=
+              Instance.As_Synthetic_Defining_Name;
+         begin
+            return MP.Match (Pattern2.F_Name, Instance2.F_Name);
+         end;
       elsif Pattern.Kind = Ada_Contract_Case_Assoc then
          declare
             Pattern2 : constant Contract_Case_Assoc :=
@@ -2555,15 +2747,6 @@ package body Rejuvenation.Match_Patterns is
               and then MP.Match
                 (Pattern2.F_Consequence, Instance2.F_Consequence);
          end;
-      elsif Pattern.Kind = Ada_Discriminant_Constraint then
-         declare
-            Pattern2 : constant Discriminant_Constraint :=
-              Pattern.As_Discriminant_Constraint;
-            Instance2 : constant Discriminant_Constraint :=
-              Instance.As_Discriminant_Constraint;
-         begin
-            return MP.Match (Pattern2.F_Constraints, Instance2.F_Constraints);
-         end;
       elsif Pattern.Kind = Ada_Begin_Block then
          declare
             Pattern2  : constant Begin_Block := Pattern.As_Begin_Block;
@@ -2573,7 +2756,6 @@ package body Rejuvenation.Match_Patterns is
               MP.Match (Pattern2.F_Stmts, Instance2.F_Stmts)
               and then MP.Match (Pattern2.F_End_Name, Instance2.F_End_Name);
          end;
-
          -- End of generated fragment --------
 
       elsif Pattern.Kind in Ada_Ada_List then

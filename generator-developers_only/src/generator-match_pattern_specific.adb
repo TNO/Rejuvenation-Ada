@@ -23,12 +23,12 @@ package body Generator.Match_Pattern_Specific is
    end Equivalent_Value;
 
    Type_Decls : constant Rejuvenation.Node_List.Vector :=
-     Rejuvenation.Finder.Find (Unit_LAL_Ads.Root, Ada_Type_Decl);
+     Rejuvenation.Finder.Find (Unit_LAL_Ads.Root, Ada_Concrete_Type_Decl);
    Subp_Decls : constant Rejuvenation.Node_List.Vector :=
      Rejuvenation.Finder.Find (Unit_LAL_Ads.Root, Ada_Subp_Spec);
 
    Type_Decls2 : constant Rejuvenation.Node_List.Vector :=
-     Rejuvenation.Finder.Find (Unit_LALCO_Ads.Root, Ada_Type_Decl);
+     Rejuvenation.Finder.Find (Unit_LALCO_Ads.Root, Ada_Concrete_Type_Decl);
 
    Kinds : List_String.Vector;
    Type_To_Direct_Children, Type_To_All_Fields : Mapping_Single_Map.Map;

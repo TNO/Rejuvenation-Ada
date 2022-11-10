@@ -9,7 +9,7 @@ package body Rejuvenation.Replacer is
 
    function Is_Empty
      (Node : Ada_Node'Class; Replacements : Map) return Boolean with
-      Pre => not Node.Is_Null;
+     Pre => not Node.Is_Null;
 
    function Is_Empty (Node : Ada_Node'Class; Replacements : Map) return Boolean
    is
@@ -24,7 +24,9 @@ package body Rejuvenation.Replacer is
      (not Node.Is_Null and then Is_Empty (Node, Replacements));
 
    function Is_Empty_List
-     (List : Ada_List'Class; Replacements : Map) return Boolean;
+     (List : Ada_List'Class; Replacements : Map) return Boolean with
+     Pre => not List.Is_Null;
+
    function Is_Empty_List
      (List : Ada_List'Class; Replacements : Map) return Boolean
    is
@@ -59,7 +61,7 @@ package body Rejuvenation.Replacer is
                Suffix : constant Ada_Node  := C_E.F_Suffix;
             begin
                return
-                 Suffix.Kind = Ada_Assoc_List
+                 not Suffix.Is_Null and then Suffix.Kind in Ada_Assoc_List
                  and then Is_Empty_List
                    (C_E.F_Suffix.As_Ada_List, Replacements);
             end;
@@ -123,7 +125,9 @@ package body Rejuvenation.Replacer is
    end Is_Replacement_Node;
 
    function Get_Replacement_For_Node
-     (Node : Ada_Node'Class; Replacements : Map) return String;
+     (Node : Ada_Node'Class; Replacements : Map) return String
+     with Pre => not Node.Is_Null;
+
    function Get_Replacement_For_Node
      (Node : Ada_Node'Class; Replacements : Map) return String
    is
