@@ -13,7 +13,6 @@ with Rejuvenation.Utils; use Rejuvenation.Utils;
 with String_Vectors; use String_Vectors;
 with Generators;     use Generators;
 with Make_Ada;       use Make_Ada;
-with Ada.Text_IO; use Ada.Text_IO;
 
 package body Test_Match_Patterns is
 

@@ -1,5 +1,8 @@
+C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\bin\examples_main.exe
 === Examples of Factory =======
+
 --- Example of parsing full text -------
+
 CompilationUnit[1:1-1:39]
 |f_prelude:
 |  AdaNodeList[1:1-1:1]: <empty list>
@@ -38,13 +41,17 @@ CompilationUnit[1:1-1:39]
 |  |  |f_end_name: <null>
 |f_pragmas:
 |  PragmaNodeList[1:39-1:39]: <empty list>
+
 --- Example of parsing partial text -------
+
 AssignStmt[1:1-1:8]
 |f_dest:
 |  Id[1:1-1:2]: x
 |f_expr:
 |  Int[1:6-1:7]: 4
+
 --- Example of parsing file outside project context -------
+
 CompilationUnit[1:1-29:19]
 |f_prelude:
 |  AdaNodeList[1:1-7:23]
@@ -198,13 +205,16 @@ CompilationUnit[1:1-29:19]
 |  |  |  |  |  |  |  Id[11:28-11:34]: String
 |  |  |  |  |  |  |f_constraint: <null>
 |  |  |  |  |  |f_default_expr:
-|  |  |  |  |  |  BinOp[11:38-11:66]
-|  |  |  |  |  |  |f_left:
+|  |  |  |  |  |  ConcatOp[11:38-11:66]
+|  |  |  |  |  |  |f_first_operand:
 |  |  |  |  |  |  |  Id[11:38-11:49]: Root_Folder
-|  |  |  |  |  |  |f_op:
-|  |  |  |  |  |  |  OpConcat[11:50-11:51]
-|  |  |  |  |  |  |f_right:
-|  |  |  |  |  |  |  Str[11:52-11:66]: "examples.gpr"
+|  |  |  |  |  |  |f_other_operands:
+|  |  |  |  |  |  |  ConcatOperandList[11:50-11:66]
+|  |  |  |  |  |  |  |  ConcatOperand[11:50-11:66]
+|  |  |  |  |  |  |  |  |f_operator:
+|  |  |  |  |  |  |  |  |  OpConcat[11:50-11:51]
+|  |  |  |  |  |  |  |  |f_operand:
+|  |  |  |  |  |  |  |  |  Str[11:52-11:66]: "examples.gpr"
 |  |  |  |  |  |f_renaming_clause: <null>
 |  |  |  |  |  |f_aspects: <null>
 |  |  |  |  |  ObjectDecl[12:4-13:44]
@@ -227,13 +237,16 @@ CompilationUnit[1:1-29:19]
 |  |  |  |  |  |  |  Id[12:28-12:34]: String
 |  |  |  |  |  |  |f_constraint: <null>
 |  |  |  |  |  |f_default_expr:
-|  |  |  |  |  |  BinOp[13:6-13:43]
-|  |  |  |  |  |  |f_left:
+|  |  |  |  |  |  ConcatOp[13:6-13:43]
+|  |  |  |  |  |  |f_first_operand:
 |  |  |  |  |  |  |  Id[13:6-13:17]: Root_Folder
-|  |  |  |  |  |  |f_op:
-|  |  |  |  |  |  |  OpConcat[13:18-13:19]
-|  |  |  |  |  |  |f_right:
-|  |  |  |  |  |  |  Str[13:20-13:43]: "src/examples_main.adb"
+|  |  |  |  |  |  |f_other_operands:
+|  |  |  |  |  |  |  ConcatOperandList[13:18-13:43]
+|  |  |  |  |  |  |  |  ConcatOperand[13:18-13:43]
+|  |  |  |  |  |  |  |  |f_operator:
+|  |  |  |  |  |  |  |  |  OpConcat[13:18-13:19]
+|  |  |  |  |  |  |  |  |f_operand:
+|  |  |  |  |  |  |  |  |  Str[13:20-13:43]: "src/examples_main.adb"
 |  |  |  |  |  |f_renaming_clause: <null>
 |  |  |  |  |  |f_aspects: <null>
 |  |  |f_stmts:
@@ -381,7 +394,9 @@ CompilationUnit[1:1-29:19]
 |  |  |  |  Id[29:5-29:18]: Examples_Main
 |f_pragmas:
 |  PragmaNodeList[29:19-29:19]: <empty list>
+
 --- Example of parsing file inside project context -------
+
 CompilationUnit[1:1-29:19]
 |f_prelude:
 |  AdaNodeList[1:1-7:23]
@@ -535,13 +550,16 @@ CompilationUnit[1:1-29:19]
 |  |  |  |  |  |  |  Id[11:28-11:34]: String
 |  |  |  |  |  |  |f_constraint: <null>
 |  |  |  |  |  |f_default_expr:
-|  |  |  |  |  |  BinOp[11:38-11:66]
-|  |  |  |  |  |  |f_left:
+|  |  |  |  |  |  ConcatOp[11:38-11:66]
+|  |  |  |  |  |  |f_first_operand:
 |  |  |  |  |  |  |  Id[11:38-11:49]: Root_Folder
-|  |  |  |  |  |  |f_op:
-|  |  |  |  |  |  |  OpConcat[11:50-11:51]
-|  |  |  |  |  |  |f_right:
-|  |  |  |  |  |  |  Str[11:52-11:66]: "examples.gpr"
+|  |  |  |  |  |  |f_other_operands:
+|  |  |  |  |  |  |  ConcatOperandList[11:50-11:66]
+|  |  |  |  |  |  |  |  ConcatOperand[11:50-11:66]
+|  |  |  |  |  |  |  |  |f_operator:
+|  |  |  |  |  |  |  |  |  OpConcat[11:50-11:51]
+|  |  |  |  |  |  |  |  |f_operand:
+|  |  |  |  |  |  |  |  |  Str[11:52-11:66]: "examples.gpr"
 |  |  |  |  |  |f_renaming_clause: <null>
 |  |  |  |  |  |f_aspects: <null>
 |  |  |  |  |  ObjectDecl[12:4-13:44]
@@ -564,13 +582,16 @@ CompilationUnit[1:1-29:19]
 |  |  |  |  |  |  |  Id[12:28-12:34]: String
 |  |  |  |  |  |  |f_constraint: <null>
 |  |  |  |  |  |f_default_expr:
-|  |  |  |  |  |  BinOp[13:6-13:43]
-|  |  |  |  |  |  |f_left:
+|  |  |  |  |  |  ConcatOp[13:6-13:43]
+|  |  |  |  |  |  |f_first_operand:
 |  |  |  |  |  |  |  Id[13:6-13:17]: Root_Folder
-|  |  |  |  |  |  |f_op:
-|  |  |  |  |  |  |  OpConcat[13:18-13:19]
-|  |  |  |  |  |  |f_right:
-|  |  |  |  |  |  |  Str[13:20-13:43]: "src/examples_main.adb"
+|  |  |  |  |  |  |f_other_operands:
+|  |  |  |  |  |  |  ConcatOperandList[13:18-13:43]
+|  |  |  |  |  |  |  |  ConcatOperand[13:18-13:43]
+|  |  |  |  |  |  |  |  |f_operator:
+|  |  |  |  |  |  |  |  |  OpConcat[13:18-13:19]
+|  |  |  |  |  |  |  |  |f_operand:
+|  |  |  |  |  |  |  |  |  Str[13:20-13:43]: "src/examples_main.adb"
 |  |  |  |  |  |f_renaming_clause: <null>
 |  |  |  |  |  |f_aspects: <null>
 |  |  |f_stmts:
@@ -718,9 +739,13 @@ CompilationUnit[1:1-29:19]
 |  |  |  |  Id[29:5-29:18]: Examples_Main
 |f_pragmas:
 |  PragmaNodeList[29:19-29:19]: <empty list>
+
 === Examples of AST accessors =======
+
 --- Example of syntactic F fields -------
+
 Declarations:
+
 ObjectDecl[10:4-10:41]
 |f_ids:
 |  DefiningNameList[10:4-10:15]
@@ -744,6 +769,7 @@ ObjectDecl[10:4-10:41]
 |  Str[10:38-10:40]: ""
 |f_renaming_clause: <null>
 |f_aspects: <null>
+
 ObjectDecl[11:4-11:67]
 |f_ids:
 |  DefiningNameList[11:4-11:16]
@@ -764,15 +790,19 @@ ObjectDecl[11:4-11:67]
 |  |  Id[11:28-11:34]: String
 |  |f_constraint: <null>
 |f_default_expr:
-|  BinOp[11:38-11:66]
-|  |f_left:
+|  ConcatOp[11:38-11:66]
+|  |f_first_operand:
 |  |  Id[11:38-11:49]: Root_Folder
-|  |f_op:
-|  |  OpConcat[11:50-11:51]
-|  |f_right:
-|  |  Str[11:52-11:66]: "examples.gpr"
+|  |f_other_operands:
+|  |  ConcatOperandList[11:50-11:66]
+|  |  |  ConcatOperand[11:50-11:66]
+|  |  |  |f_operator:
+|  |  |  |  OpConcat[11:50-11:51]
+|  |  |  |f_operand:
+|  |  |  |  Str[11:52-11:66]: "examples.gpr"
 |f_renaming_clause: <null>
 |f_aspects: <null>
+
 ObjectDecl[12:4-13:44]
 |f_ids:
 |  DefiningNameList[12:4-12:13]
@@ -793,39 +823,51 @@ ObjectDecl[12:4-13:44]
 |  |  Id[12:28-12:34]: String
 |  |f_constraint: <null>
 |f_default_expr:
-|  BinOp[13:6-13:43]
-|  |f_left:
+|  ConcatOp[13:6-13:43]
+|  |f_first_operand:
 |  |  Id[13:6-13:17]: Root_Folder
-|  |f_op:
-|  |  OpConcat[13:18-13:19]
-|  |f_right:
-|  |  Str[13:20-13:43]: "src/examples_main.adb"
+|  |f_other_operands:
+|  |  ConcatOperandList[13:18-13:43]
+|  |  |  ConcatOperand[13:18-13:43]
+|  |  |  |f_operator:
+|  |  |  |  OpConcat[13:18-13:19]
+|  |  |  |f_operand:
+|  |  |  |  Str[13:20-13:43]: "src/examples_main.adb"
 |f_renaming_clause: <null>
 |f_aspects: <null>
+
 --- Example of semantic P properties -------
-Call: <CallExpr examples_main.adb:17:4-17:51> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples_main.adb
-  --> Declaration: <SubpDecl ["Demo"] examples-factory.ads:3:4-3:63> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples-factory.ads
-Call: <CallExpr examples_main.adb:20:4-20:47> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples_main.adb
-  --> Declaration: <SubpDecl ["Demo"] examples-ast.ads:3:4-3:63> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples-ast.ads
-Call: <CallExpr examples_main.adb:21:4-21:37> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples_main.adb
-  --> Declaration: <SubpDecl ["Demo"] examples-visitor.ads:3:4-3:40> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples-visitor.ads
-Call: <CallExpr examples_main.adb:23:4-23:36> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples_main.adb
-  --> Declaration: <SubpDecl ["Demo"] examples-finder.ads:3:4-3:40> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples-finder.ads
-Call: <CallExpr examples_main.adb:24:4-24:40> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples_main.adb
-  --> Declaration: <SubpDecl ["Demo"] examples-navigation.ads:3:4-3:40> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples-navigation.ads
-Call: <CallExpr examples_main.adb:27:4-27:43> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples_main.adb
-  --> Declaration: <SubpDecl ["Demo"] examples-text_rewrites.ads:3:4-3:40> from /home/runner/work/Rejuvenation-Ada/Rejuvenation-Ada/examples/src/examples-text_rewrites.ads
+
+Call: <CallExpr examples_main.adb:17:4-17:51> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples_main.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-factory.ads:3:4-3:63> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples-factory.ads
+Call: <CallExpr examples_main.adb:20:4-20:47> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples_main.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-ast.ads:3:4-3:63> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples-ast.ads
+Call: <CallExpr examples_main.adb:21:4-21:37> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples_main.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-visitor.ads:3:4-3:40> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples-visitor.ads
+Call: <CallExpr examples_main.adb:23:4-23:36> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples_main.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-finder.ads:3:4-3:40> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples-finder.ads
+Call: <CallExpr examples_main.adb:24:4-24:40> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples_main.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-navigation.ads:3:4-3:40> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples-navigation.ads
+Call: <CallExpr examples_main.adb:27:4-27:43> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples_main.adb
+  --> Declaration: <SubpDecl ["Demo"] examples-text_rewrites.ads:3:4-3:40> from C:\path\to\Renaissance-Ada\src\libraries\rejuvenation\examples\src\examples-text_rewrites.ads
+
 === Examples of Visitor =======
+
 <CallExpr examples_main.adb:17:4-17:51>
 <CallExpr examples_main.adb:20:4-20:47>
 <CallExpr examples_main.adb:21:4-21:37>
 <CallExpr examples_main.adb:23:4-23:36>
 <CallExpr examples_main.adb:24:4-24:40>
 <CallExpr examples_main.adb:27:4-27:43>
+
 === Examples of Match_Pattern =======
+
 --- Examples without placeholders (success) -------
+
 TRUE
+
 --- Examples without placeholders (failure) -------
+
 Incompatible pattern and instance of the same kind:
 * Pattern <Int Fragment:1:6-1:8>: 21
 * Instance <Int Fragment:1:6-1:8>: 42
@@ -833,23 +875,47 @@ Incompatible pattern and instance of the same kind:
 * Pattern <AssignStmt Fragment:1:1-1:9>: x := 21;
 * Instance <AssignStmt Fragment:1:1-1:9>: x := 42;
 FALSE
+
 --- Examples with single placeholders (success: single occurence) -------
+
 TRUE TRUE <Int Fragment:1:6-1:8> 42
+
 --- Examples with single placeholders (success: consistent occurences) -------
+
 TRUE TRUE <Int Fragment:1:6-1:8> 42
+
 --- Examples with single placeholders (failure: inconsistent occurences) -------
+
+Incompatible pattern and instance of the same kind:
+* Pattern <Int Fragment:1:6-1:8>: 42
+* Instance <Int Fragment:1:11-1:13>: 21
 FALSE FALSE
+
 --- Examples with single placeholders (success: consistent complex occurences) -------
+
 TRUE TRUE <ParenExpr Fragment:1:6-1:15> (f(a)+12)
+
 --- Examples with multiple placeholders (success: single occurence) -------
+
 TRUE TRUE  1 <Int Fragment:1:6-1:8>
+
 --- Examples with multiple placeholders (success: consistent occurences) -------
+
 TRUE TRUE  1 <Int Fragment:1:6-1:8>
+
 --- Examples with multiple placeholders (failure: inconsistent occurences) -------
+
+Incompatible pattern and instance of the same kind:
+* Pattern <Int Fragment:1:6-1:8>: 42
+* Instance <Int Fragment:1:11-1:13>: 21
 FALSE FALSE
+
 --- Examples with single and multiple placeholders (success) -------
+
 TRUE TRUE <Int Fragment:1:6-1:8> 42 TRUE  2 <AssignStmt Fragment:1:10-1:18> x := 21; <AssignStmt Fragment:1:19-1:27> y := 22;
+
 --- Examples with single and multiple placeholders (failure) -------
+
 Derived placeholder values:
 * $S_value: 42
 * $M_stats: [ 3]
@@ -857,40 +923,53 @@ Derived placeholder values:
   - y := 21;
   - x := 43;
 Superfluous node in pattern:
-FALSE FALSE FALSE
 * Pattern <AssignStmt Fragment:1:26-1:40>: x := $S_value;
 Incompatible pattern and instance of the same kind:
 * Pattern <StmtList Fragment:1:1-1:40>: x := $S_value; $M_stats; x := $S_value;
 * Instance <StmtList Fragment:1:1-1:36>: x := 42; y := 21; y := 21; x := 43;
+FALSE FALSE FALSE
+
 === Examples of Finder =======
+
 --- Example to find node kind -------
+
 <ObjectDecl ["Root_Folder"] examples_main.adb:10:4-10:41>
 <ObjectDecl ["Project_Name"] examples_main.adb:11:4-11:67>
 <ObjectDecl ["File_Name"] examples_main.adb:12:4-13:44>
+
 --- Example to find pattern -------
+
  1 <CallStmt examples_main.adb:17:4-17:52> Examples.Factory.Demo (Project_Name, File_Name);
  1 <CallStmt examples_main.adb:20:4-20:48> Examples.Ast.Demo (Project_Name, File_Name);
  1 <CallStmt examples_main.adb:21:4-21:38> Examples.Visitor.Demo (File_Name);
  1 <CallStmt examples_main.adb:23:4-23:37> Examples.Finder.Demo (File_Name);
  1 <CallStmt examples_main.adb:24:4-24:41> Examples.Navigation.Demo (File_Name);
  1 <CallStmt examples_main.adb:27:4-27:44> Examples.Text_Rewrites.Demo (File_Name);
+
 --- Example to find sublist pattern -------
+
 Mutex: lock_x
 * x := 2;
 * y := 3;
 Mutex: lock_y
 * c := 10;
 * d := 12;
+
 === Examples of Navigation =======
+
 --- Example to navigate between nodes -------
+
 Call_Expr <CallExpr examples_main.adb:17:4-17:51> inside Call_Stmt <CallStmt examples_main.adb:17:4-17:52>
 Call_Expr <CallExpr examples_main.adb:20:4-20:47> inside Call_Stmt <CallStmt examples_main.adb:20:4-20:48>
 Call_Expr <CallExpr examples_main.adb:21:4-21:37> inside Call_Stmt <CallStmt examples_main.adb:21:4-21:38>
 Call_Expr <CallExpr examples_main.adb:23:4-23:36> inside Call_Stmt <CallStmt examples_main.adb:23:4-23:37>
 Call_Expr <CallExpr examples_main.adb:24:4-24:40> inside Call_Stmt <CallStmt examples_main.adb:24:4-24:41>
 Call_Expr <CallExpr examples_main.adb:27:4-27:43> inside Call_Stmt <CallStmt examples_main.adb:27:4-27:44>
+
 === Examples of Text_Rewrite =======
+
 --- Example insert comment (before + after Call Statement) -------
+
 with Examples.Ast;
 with Examples.Factory;
 with Examples.Finder;
@@ -898,34 +977,47 @@ with Examples.Match_Patterns;
 with Examples.Navigation;
 with Examples.Text_Rewrites;
 with Examples.Visitor;
+
 procedure Examples_Main is
    Root_Folder  : constant String := "";
    Project_Name : constant String := Root_Folder & "examples.gpr";
    File_Name    : constant String :=
      Root_Folder & "src/examples_main.adb";
 begin
+
    -- Parsing --------
    --  inserted comment before <CallStmt examples_main.adb:17:4-17:52> / Examples.Factory.Demo (Project_Name, File_Name);
    Examples.Factory.Demo (Project_Name, File_Name);
    --  inserted comment after <CallStmt examples_main.adb:17:4-17:52> / Examples.Factory.Demo (Project_Name, File_Name);
+
+
    -- Code analysis --------
    --  inserted comment before <CallStmt examples_main.adb:20:4-20:48> / Examples.Ast.Demo (Project_Name, File_Name);
    Examples.Ast.Demo (Project_Name, File_Name);
    --  inserted comment after <CallStmt examples_main.adb:20:4-20:48> / Examples.Ast.Demo (Project_Name, File_Name);
+
    --  inserted comment before <CallStmt examples_main.adb:21:4-21:38> / Examples.Visitor.Demo (File_Name);
    Examples.Visitor.Demo (File_Name);
    --  inserted comment after <CallStmt examples_main.adb:21:4-21:38> / Examples.Visitor.Demo (File_Name);
+
    --  inserted comment before <CallStmt examples_main.adb:22:4-22:33> / Examples.Match_Patterns.Demo;
    Examples.Match_Patterns.Demo;
    --  inserted comment after <CallStmt examples_main.adb:22:4-22:33> / Examples.Match_Patterns.Demo;
+
    --  inserted comment before <CallStmt examples_main.adb:23:4-23:37> / Examples.Finder.Demo (File_Name);
    Examples.Finder.Demo (File_Name);
    --  inserted comment after <CallStmt examples_main.adb:23:4-23:37> / Examples.Finder.Demo (File_Name);
+
    --  inserted comment before <CallStmt examples_main.adb:24:4-24:41> / Examples.Navigation.Demo (File_Name);
    Examples.Navigation.Demo (File_Name);
    --  inserted comment after <CallStmt examples_main.adb:24:4-24:41> / Examples.Navigation.Demo (File_Name);
+
+
    -- Code manipulation --------
    --  inserted comment before <CallStmt examples_main.adb:27:4-27:44> / Examples.Text_Rewrites.Demo (File_Name);
    Examples.Text_Rewrites.Demo (File_Name);
    --  inserted comment after <CallStmt examples_main.adb:27:4-27:44> / Examples.Text_Rewrites.Demo (File_Name);
+
+
 end Examples_Main;
+
