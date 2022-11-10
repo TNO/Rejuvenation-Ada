@@ -10,7 +10,7 @@ executables = ["examples_main"]
 
 [[depends-on]]
 libadalang = "^23.0.0"
-rejuvenation = "^22.0.0"
+rejuvenation = "^23.0.0"
 
 [[pins]]
 rejuvenation = { path = ".." } 

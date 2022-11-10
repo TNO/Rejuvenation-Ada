@@ -1,6 +1,6 @@
 name = "rejuvenation"
 description = "Analysis and manipulation of Ada code based on concrete patterns"
-version = "22.0.1"
+version = "23.0.0"
 licenses = "BSD-3-Clause"
 website = "https://github.com/TNO/Rejuvenation-Ada"
 tags = ["analysis", "manipulation", "transformation"]
@@ -14,6 +14,6 @@ libadalang = "^23.0.0"          #  remove this dependency when libadalang is
                                 #  already installed on your system
                                 #  and accessible via your GPR_PROJECT_PATH
 
-# libadalang_tools = "^22.0.0"    #  needs gnatpp from libadalang_tools installed on PATH
+# libadalang_tools = "^23.0.0"    #  needs gnatpp from libadalang_tools installed on PATH
                                   #  Alire is not yet capable to add gnatpp to PATH.
                                   #  see https://github.com/AdaCore/libadalang-tools/issues/21
