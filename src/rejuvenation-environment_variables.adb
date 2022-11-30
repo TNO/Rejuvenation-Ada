@@ -1,6 +1,5 @@
 with Ada.Directories;           use Ada.Directories;
 with Ada.Environment_Variables; use Ada.Environment_Variables;
-with Ada.Strings.Fixed;         use Ada.Strings.Fixed;
 with Ada.Text_IO;               use Ada.Text_IO;
 with GNAT.Regpat;               use GNAT.Regpat;
 with Interfaces.C;              use Interfaces.C;
