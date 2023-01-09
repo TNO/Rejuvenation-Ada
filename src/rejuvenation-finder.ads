@@ -65,35 +65,56 @@ package Rejuvenation.Finder is
    --  from the AST instance that fully match the node kinds.
 
    -- Find Match_Pattern --------
+
+   function Accept_Every_Match (M_P : Match_Pattern) return Boolean;
+   --  Predicate function that accepts every match
+
    function Find_Full
-     (Node : Ada_Node'Class; Find_Pattern : Pattern)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector;
    --  Return all recursively nested nodes from the AST instance
-   --  that fully match the AST pattern.
+   --  that fully match the AST pattern and the predicate.
 
    function Find_Non_Contained_Full
-     (Node : Ada_Node'Class; Find_Pattern : Pattern)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector;
-   --  Return all nodes from the AST instance that fully match the AST pattern,
+   --  Return all nodes from the AST instance that fully match the AST pattern
+   --  and the predicate,
    --  but without nodes that are contained / recursively nested
    --  in other returned nodes.
 
    function Find_First_Full
-     (Node   :     Ada_Node'Class; Find_Pattern : Pattern;
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access;
       Result : out Match_Pattern) return Boolean;
    --  Return the first recursively nested node from the AST instance that
-   --  fully match the AST pattern.
+   --  fully match the AST pattern and the predicate.
 
    function Find_Sub_List
-     (Node : Ada_Node'Class; Find_Pattern : Pattern)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector;
    --  Return all recursively nested subsequences of nodes
-   --  from the AST instance that fully match the AST pattern.
+   --  from the AST instance that fully match the AST pattern and the Predicate.
 
    function Find_Non_Contained_Sub_List
-     (Node : Ada_Node'Class; Find_Pattern : Pattern)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector;
-   --  Return all nodes from the AST instance that fully match the AST pattern,
+   --  Return all nodes from the AST instance that fully match the AST pattern
+   --  and the predicate,
    --  but without nodes that are contained / recursively nested
    --  in other returned nodes.
 
@@ -118,13 +139,19 @@ private
       return Node_List_List.Vector;
 
    function Find_MP
-     (Node : Ada_Node'Class; Pattern : Ada_Node; Next : Visit_Status)
+     (Node      : Ada_Node'Class; Pattern : Ada_Node; Next : Visit_Status;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector;
 
    type Containment is (Contained, Non_Contained);
 
    function Find_MP_Sub_List
-     (Node : Ada_Node'Class; Pattern : Ada_Node_Array; Next : Containment)
+     (Node      : Ada_Node'Class; Pattern : Ada_Node_Array; Next : Containment;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector;
 
 end Rejuvenation.Finder;

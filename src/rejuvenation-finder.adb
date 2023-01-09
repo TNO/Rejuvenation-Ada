@@ -69,29 +69,44 @@ package body Rejuvenation.Finder is
 
    -- Public: Find Match_Pattern --------
 
+   function Accept_Every_Match (M_P : Match_Pattern) return Boolean is
+      pragma Unreferenced (M_P);
+   begin
+      return True;
+   end Accept_Every_Match;
+
    function Find_Full
-     (Node : Ada_Node'Class; Find_Pattern : Pattern)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector
    is
    begin
-      return Find_MP (Node, Find_Pattern.As_Ada_Node, Into);
+      return Find_MP (Node, Find_Pattern.As_Ada_Node, Into, Predicate);
    end Find_Full;
 
    function Find_Non_Contained_Full
-     (Node : Ada_Node'Class; Find_Pattern : Pattern)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector
    is
    begin
-      return Find_MP (Node, Find_Pattern.As_Ada_Node, Over);
+      return Find_MP (Node, Find_Pattern.As_Ada_Node, Over, Predicate);
    end Find_Non_Contained_Full;
 
    function Find_First_Full
-     (Node   :     Ada_Node'Class; Find_Pattern : Pattern;
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access;
       Result : out Match_Pattern) return Boolean
    is
       use Match_Pattern_List;
       Results : constant Match_Pattern_List.Vector :=
-        Find_MP (Node, Find_Pattern.As_Ada_Node, Stop);
+        Find_MP (Node, Find_Pattern.As_Ada_Node, Stop, Predicate);
    begin
       if Results.Is_Empty then
          return False;
@@ -102,30 +117,42 @@ package body Rejuvenation.Finder is
    end Find_First_Full;
 
    function Find_Sub_List
-     (Node : Ada_Node'Class; Find_Pattern : Pattern; Next : Containment)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern; Next : Containment;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector;
    function Find_Sub_List
-     (Node : Ada_Node'Class; Find_Pattern : Pattern; Next : Containment)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern; Next : Containment;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector
    is
       Find_Node : constant Ada_Node := Find_Pattern.As_Ada_Node;
    begin
       if Find_Node.Kind in Ada_Ada_List then
-         return Find_MP_Sub_List (Node, Find_Node.Children, Next);
+         return Find_MP_Sub_List (Node, Find_Node.Children, Next, Predicate);
       else
          raise Pattern_Is_No_List_Exception;
       end if;
    end Find_Sub_List;
 
    function Find_Sub_List
-     (Node : Ada_Node'Class; Find_Pattern : Pattern)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector is
-     (Find_Sub_List (Node, Find_Pattern, Contained));
+     (Find_Sub_List (Node, Find_Pattern, Contained, Predicate));
 
    function Find_Non_Contained_Sub_List
-     (Node : Ada_Node'Class; Find_Pattern : Pattern)
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector is
-     (Find_Sub_List (Node, Find_Pattern, Non_Contained));
+     (Find_Sub_List (Node, Find_Pattern, Non_Contained, Predicate));
 
    function Find_Full
      (Node : Ada_Node'Class; Find_Patterns : Pattern_Array)
@@ -168,19 +195,22 @@ package body Rejuvenation.Finder is
    end Find_Predicate;
 
    function Find_MP
-     (Node : Ada_Node'Class; Pattern : Ada_Node; Next : Visit_Status)
+     (Node      : Ada_Node'Class; Pattern : Ada_Node; Next : Visit_Status;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector
    is
       Result : Match_Pattern_List.Vector;
 
       function Visit (Node : Ada_Node'Class) return Visit_Status;
       function Visit (Node : Ada_Node'Class) return Visit_Status is
-         MP      : Match_Pattern;
-         Success : constant Boolean :=
-           MP.Match_Full (Pattern, Ada_Node (Node));
+         M_P      : Match_Pattern;
+         Is_Match : constant Boolean :=
+           M_P.Match_Full (Pattern, Ada_Node (Node));
       begin
-         if Success then
-            Result.Append (MP);
+         if Is_Match and then Predicate (M_P) then
+            Result.Append (M_P);
             return Next;
          else
             return Into;
@@ -236,7 +266,10 @@ package body Rejuvenation.Finder is
    end Find_NK_Sub_List;
 
    function Find_MP_Sub_List
-     (Node : Ada_Node'Class; Pattern : Ada_Node_Array; Next : Containment)
+     (Node      : Ada_Node'Class; Pattern : Ada_Node_Array; Next : Containment;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean :=
+        Accept_Every_Match'Access)
       return Match_Pattern_List.Vector
       --  Special cases:
       --  We do not allow matches to contain overlapping nodes
@@ -266,12 +299,13 @@ package body Rejuvenation.Finder is
                for Node_Index in Node.Children'Range loop
                   if Node_Index > Skip and then Node_Index <= Upperbound then
                      declare
-                        MP      : Match_Pattern;
+                        M_P     : Match_Pattern;
                         Success : constant Boolean :=
-                          MP.Match_Prefix (Pattern, Node.Children, Node_Index);
+                          M_P.Match_Prefix
+                            (Pattern, Node.Children, Node_Index);
                      begin
-                        if Success then
-                           Result.Append (MP);
+                        if Success and then Predicate (M_P) then
+                           Result.Append (M_P);
                            Skip := Node_Index + Pattern'Length - 1;
                         end if;
                      end;
