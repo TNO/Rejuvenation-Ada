@@ -117,28 +117,6 @@ package body Rejuvenation.Finder is
    end Find_First_Full;
 
    function Find_Sub_List
-     (Node      : Ada_Node'Class; Find_Pattern : Pattern; Next : Containment;
-      Predicate : not null access function
-        (M_P : Match_Pattern) return Boolean :=
-        Accept_Every_Match'Access)
-      return Match_Pattern_List.Vector;
-   function Find_Sub_List
-     (Node      : Ada_Node'Class; Find_Pattern : Pattern; Next : Containment;
-      Predicate : not null access function
-        (M_P : Match_Pattern) return Boolean :=
-        Accept_Every_Match'Access)
-      return Match_Pattern_List.Vector
-   is
-      Find_Node : constant Ada_Node := Find_Pattern.As_Ada_Node;
-   begin
-      if Find_Node.Kind in Ada_Ada_List then
-         return Find_MP_Sub_List (Node, Find_Node.Children, Next, Predicate);
-      else
-         raise Pattern_Is_No_List_Exception;
-      end if;
-   end Find_Sub_List;
-
-   function Find_Sub_List
      (Node      : Ada_Node'Class; Find_Pattern : Pattern;
       Predicate : not null access function
         (M_P : Match_Pattern) return Boolean :=
@@ -197,8 +175,7 @@ package body Rejuvenation.Finder is
    function Find_MP
      (Node      : Ada_Node'Class; Pattern : Ada_Node; Next : Visit_Status;
       Predicate : not null access function
-        (M_P : Match_Pattern) return Boolean :=
-        Accept_Every_Match'Access)
+        (M_P : Match_Pattern) return Boolean)
       return Match_Pattern_List.Vector
    is
       Result : Match_Pattern_List.Vector;
@@ -265,11 +242,25 @@ package body Rejuvenation.Finder is
       return Result;
    end Find_NK_Sub_List;
 
+   function Find_Sub_List
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern; Next : Containment;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean)
+      return Match_Pattern_List.Vector
+   is
+      Find_Node : constant Ada_Node := Find_Pattern.As_Ada_Node;
+   begin
+      if Find_Node.Kind in Ada_Ada_List then
+         return Find_MP_Sub_List (Node, Find_Node.Children, Next, Predicate);
+      else
+         raise Pattern_Is_No_List_Exception;
+      end if;
+   end Find_Sub_List;
+
    function Find_MP_Sub_List
      (Node      : Ada_Node'Class; Pattern : Ada_Node_Array; Next : Containment;
       Predicate : not null access function
-        (M_P : Match_Pattern) return Boolean :=
-        Accept_Every_Match'Access)
+        (M_P : Match_Pattern) return Boolean)
       return Match_Pattern_List.Vector
       --  Special cases:
       --  We do not allow matches to contain overlapping nodes
@@ -299,12 +290,12 @@ package body Rejuvenation.Finder is
                for Node_Index in Node.Children'Range loop
                   if Node_Index > Skip and then Node_Index <= Upperbound then
                      declare
-                        M_P     : Match_Pattern;
-                        Success : constant Boolean :=
+                        M_P      : Match_Pattern;
+                        Is_Match : constant Boolean :=
                           M_P.Match_Prefix
                             (Pattern, Node.Children, Node_Index);
                      begin
-                        if Success and then Predicate (M_P) then
+                        if Is_Match and then Predicate (M_P) then
                            Result.Append (M_P);
                            Skip := Node_Index + Pattern'Length - 1;
                         end if;

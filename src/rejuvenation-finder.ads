@@ -141,17 +141,21 @@ private
    function Find_MP
      (Node      : Ada_Node'Class; Pattern : Ada_Node; Next : Visit_Status;
       Predicate : not null access function
-        (M_P : Match_Pattern) return Boolean :=
-        Accept_Every_Match'Access)
+        (M_P : Match_Pattern) return Boolean)
       return Match_Pattern_List.Vector;
 
    type Containment is (Contained, Non_Contained);
 
+   function Find_Sub_List
+     (Node      : Ada_Node'Class; Find_Pattern : Pattern; Next : Containment;
+      Predicate : not null access function
+        (M_P : Match_Pattern) return Boolean)
+      return Match_Pattern_List.Vector;
+
    function Find_MP_Sub_List
      (Node      : Ada_Node'Class; Pattern : Ada_Node_Array; Next : Containment;
       Predicate : not null access function
-        (M_P : Match_Pattern) return Boolean :=
-        Accept_Every_Match'Access)
+        (M_P : Match_Pattern) return Boolean)
       return Match_Pattern_List.Vector;
 
 end Rejuvenation.Finder;
