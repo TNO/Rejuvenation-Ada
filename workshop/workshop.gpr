@@ -1,5 +1,12 @@
-with "config/workshop_config.gpr";
 with "../settings/rejuvenation_settings.gpr";
+
+--  with alire
+with "config/workshop_config.gpr";
+
+--  without alire
+--  with "libadalang.gpr";
+--  with "../rejuvenation.gpr";
+
 project Workshop is
 
    for Library_Name use "Workshop";

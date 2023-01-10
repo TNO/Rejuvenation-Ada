@@ -1,5 +1,11 @@
-with "config/find_tool_config.gpr";
 with "../settings/rejuvenation_settings.gpr";
+
+--  with alire
+with "config/find_tool_config.gpr";
+
+--  without alire
+--  with "libadalang.gpr";
+--  with "../rejuvenation.gpr";
 
 project Find_Tool is
 
