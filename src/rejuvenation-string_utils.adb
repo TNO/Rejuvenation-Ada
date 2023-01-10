@@ -16,15 +16,12 @@ is
       Location : constant Natural :=
         Index (Source => Source, Pattern => Pattern);
    begin
-      if Location = 0 then
-         return Source;
-      else
-         return
-           Source (Source'First .. Location - 1) & Replacement &
+      return
+        (if Location = 0 then Source
+         else Source (Source'First .. Location - 1) & Replacement &
            Replace_All
              (Source (Location + Pattern'Length .. Source'Last), Pattern,
-              Replacement);
-      end if;
+              Replacement));
    end Replace_All;
 
 end Rejuvenation.String_Utils;

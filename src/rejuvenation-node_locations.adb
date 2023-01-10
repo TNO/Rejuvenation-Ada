@@ -37,14 +37,12 @@ package body Rejuvenation.Node_Locations is
                Pos : constant Natural :=
                  Index (Token_Text, (1 => ASCII.LF), Going => Backward);
             begin
-               if Pos = 0 then
-                  return
+               return
+                 (if Pos = 0 then
                     Line_Start_Offset
-                      (Previous (Token), Offset - Token_Text'Length);
-               else
-                  return
-                    Raw_Data (Token).Source_First + Pos + 1 - Token_Text'First;
-               end if;
+                      (Previous (Token), Offset - Token_Text'Length)
+                  else Raw_Data (Token).Source_First + Pos + 1 -
+                    Token_Text'First);
             end;
          else
             return Offset;
@@ -67,15 +65,14 @@ package body Rejuvenation.Node_Locations is
         (Token : Token_Reference; Nr : Integer) return Integer
       is
       begin
-         if Token /= No_Token
-           and then Kind (Data (Token)) in Ada_Whitespace | Ada_Comment
-         then
-            return
+         return
+           (if
+              Token /= No_Token
+              and then Kind (Data (Token)) in Ada_Whitespace | Ada_Comment
+            then
               Trivia_Start_Offset
-                (Previous (Token), Raw_Data (Token).Source_First);
-         else
-            return Nr;
-         end if;
+                (Previous (Token), Raw_Data (Token).Source_First)
+            else Nr);
       end Trivia_Start_Offset;
 
    begin
@@ -130,13 +127,10 @@ package body Rejuvenation.Node_Locations is
                  Encode (Text (Token), Node.Unit.Get_Charset);
                Pos : constant Natural := Index (Token_Text, (1 => ASCII.LF));
             begin
-               if Pos = 0 then
-                  return
-                    Line_End_Offset (Next (Token), Offset + Token_Text'Length);
-               else
-                  return
-                    Raw_Data (Token).Source_First + Pos - Token_Text'First;
-               end if;
+               return
+                 (if Pos = 0 then
+                    Line_End_Offset (Next (Token), Offset + Token_Text'Length)
+                  else Raw_Data (Token).Source_First + Pos - Token_Text'First);
             end;
          else
             return Offset;
@@ -157,14 +151,12 @@ package body Rejuvenation.Node_Locations is
         (Token : Token_Reference; Nr : Natural) return Natural
       is
       begin
-         if Token /= No_Token
-           and then Kind (Data (Token)) in Ada_Whitespace | Ada_Comment
-         then
-            return
-              Trivia_End_Offset (Next (Token), Raw_Data (Token).Source_Last);
-         else
-            return Nr;
-         end if;
+         return
+           (if
+              Token /= No_Token
+              and then Kind (Data (Token)) in Ada_Whitespace | Ada_Comment
+            then Trivia_End_Offset (Next (Token), Raw_Data (Token).Source_Last)
+            else Nr);
       end Trivia_End_Offset;
 
    begin

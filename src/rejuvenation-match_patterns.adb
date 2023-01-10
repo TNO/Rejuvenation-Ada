@@ -493,11 +493,10 @@ package body Rejuvenation.Match_Patterns is
       --  we select a unique [shallow] representation
       function Disambiguate_Node (Node : Ada_Node) return Ada_Node is
       begin
-         if Node.Is_Null or else Node.Kind not in Ada_Defining_Name then
-            return Node;
-         else
-            return Node.First_Child;
-         end if;
+         return
+           (if Node.Is_Null or else Node.Kind not in Ada_Defining_Name then
+              Node
+            else Node.First_Child);
       end Disambiguate_Node;
 
       Placeholder_Name : constant String := Get_Placeholder_Name (Pattern);
@@ -524,11 +523,10 @@ package body Rejuvenation.Match_Patterns is
    function filter (Node : Ada_Node) return Ada_Node_Array;
    function filter (Node : Ada_Node) return Ada_Node_Array is
    begin
-      if Node.Kind = Ada_Composite_Constraint then
-         return Node.As_Composite_Constraint.F_Constraints.Children;
-      else
-         return (1 => Node);
-      end if;
+      return
+        (if Node.Kind = Ada_Composite_Constraint then
+           Node.As_Composite_Constraint.F_Constraints.Children
+         else (1 => Node));
    end filter;
 
    function Match_Specific

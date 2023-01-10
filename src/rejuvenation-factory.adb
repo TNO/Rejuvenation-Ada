@@ -43,7 +43,8 @@ package body Rejuvenation.Factory is
      (Context : Project_Context; Recursive : Boolean := True)
       return Analysis_Unit_Vectors.Vector
    is
-      Files : File_Array renames
+      Files :
+        File_Array renames
         Context.Project_Tree.Root_Project.Source_Files
           (Recursive => Recursive).all;
       Results : Analysis_Unit_Vectors.Vector;
@@ -67,15 +68,13 @@ package body Rejuvenation.Factory is
       Info : constant File_Info :=
         Context.Project_Tree.Info (Create (+Filename));
    begin
-      if Recursive then
-         return
-           Info.Language = "ada" and then Info.Project /= No_Project
-           and then not Info.Project.Externally_Built;
-      else
-         return
-           Info.Language = "ada"
-           and then Info.Project = Context.Project_Tree.Root_Project;
-      end if;
+      return
+        Info.Language = "ada"
+        and then
+        (if Recursive then
+           Info.Project /= No_Project
+           and then not Info.Project.Externally_Built
+         else Info.Project = Context.Project_Tree.Root_Project);
    end Is_Ada_File_Built_By_Project;
 
    function Is_Project_Main_Program

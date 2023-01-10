@@ -99,13 +99,11 @@ package body Rejuvenation.Indentation is
                Pos : constant Natural :=
                  Index (Token_Text, (1 => ASCII.LF), Going => Backward);
             begin
-               if Pos = 0 then
-                  return
+               return
+                 (if Pos = 0 then
                     Indentatation_Of_Token
-                      (Previous (Token), Nr + Token_Text'Length);
-               else
-                  return Nr + Token_Text'Last - Pos;
-               end if;
+                      (Previous (Token), Nr + Token_Text'Length)
+                  else Nr + Token_Text'Last - Pos);
             end;
          else
             return No_Indentation;
