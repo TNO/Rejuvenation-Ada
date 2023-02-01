@@ -1,4 +1,4 @@
-[![vote for Rejuvenation-Ada as The 2022 Ada Crate Of The Year](https://user-images.githubusercontent.com/18348654/191469254-1ca1f4a0-6242-43fa-94a2-f39f55817fdc.jpg)](https://github.com/AdaCore/Ada-SPARK-Crate-Of-The-Year/issues/15)
+[![Ada Crate Of The Year 2022](https://github.com/TNO/Renaissance-Ada/blob/main/doc/AdaCrateOfTheYear2022-Rejuvenation-Ada.jpg)](https://blog.adacore.com/ada-spark-crate-of-the-year-2022-winners-announced)
 
 # Rejuvenation-Ada
 
