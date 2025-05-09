@@ -393,7 +393,7 @@ package body Rejuvenation.Match_Patterns is
          if Is_Single_Placeholder (Pattern) then
             Assert
               (Check   => not Instance.Is_Null,
-               Message => "For single plaeholder: Instance can't be null");
+               Message => "For single placeholder: Instance can't be null");
             Success := MP.Match_Single_Placeholder (Pattern, Instance);
          elsif Is_Multiple_Placeholder (Pattern) then
             Success := MP.Match_Multiple_Placeholder (Pattern, Instance);
